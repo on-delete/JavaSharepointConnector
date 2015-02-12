@@ -1,22 +1,33 @@
 package gui.viewmodel;
 
-import gui.SharepointView;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
+import javax.inject.Inject;
+
+import common.ErrorMessages;
+import service.SharepointService;
+import util.UserCredentials;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewModel;
-import de.saxsys.mvvmfx.ViewTuple;
 
 public class LoginViewModel implements ViewModel{
 
-	private StringProperty username = new SimpleStringProperty();
-	private StringProperty password = new SimpleStringProperty();
-	private StringProperty address = new SimpleStringProperty();
-	private Property<Stage> primaryStage = new SimpleObjectProperty<Stage>();
+	private StringProperty username = new SimpleStringProperty(LoginViewMockData.username);
+	private StringProperty password = new SimpleStringProperty(LoginViewMockData.password);
+	private StringProperty address = new SimpleStringProperty(LoginViewMockData.url);
+	private IntegerProperty errorMessage = new SimpleIntegerProperty(0);
+	private BooleanProperty isActive = new SimpleBooleanProperty(true);
+	
+	private UserCredentials userCredentials;
+	private SharepointService service;
+	
+	@Inject
+	public LoginViewModel(SharepointService service){
+		this.service = service;
+	}
 	
 	public StringProperty usernameProperty() {
 		return username;
@@ -30,13 +41,47 @@ public class LoginViewModel implements ViewModel{
 		return address;
 	}
 	
-	public Property<Stage> primaryStageProperty() {
-		return primaryStage;
+	public IntegerProperty errorMessageProperty() {
+		return errorMessage;
+	}
+
+	public BooleanProperty isActiveProperty() {
+		return isActive;
 	}
 
 	public void login() {
-		ViewTuple<SharepointView, SharepointViewModel> viewTuple = FluentViewLoader.fxmlView(SharepointView.class).load();
+		userCredentials = new UserCredentials(username.getValue() , password.getValue());
 		
-		primaryStage.getValue().setScene(new Scene(viewTuple.getView()));
+		service.initialize(address.getValue(), userCredentials);
+		
+		if(testConnection()){
+			isActive.set(false);
+		}
+	}
+	
+	private boolean testConnection(){
+		errorMessage.set(0);
+		int errorMessage = service.testSharepointConnection();
+		
+		switch(errorMessage){
+			case ErrorMessages.SUCCESS:{
+				return true;
+			}
+			case ErrorMessages.NOT_AUTHORIZED:{
+				this.errorMessage.set(ErrorMessages.NOT_AUTHORIZED);
+				return false;
+			}
+			case ErrorMessages.NOT_FOUND:{
+				this.errorMessage.set(ErrorMessages.NOT_FOUND);
+				return false;
+			}
+			case ErrorMessages.INTERNAL_ERROR:{
+				this.errorMessage.set(ErrorMessages.INTERNAL_ERROR);
+				return false;
+			}
+			default:{
+				return false;
+			}
+		}
 	}
 }

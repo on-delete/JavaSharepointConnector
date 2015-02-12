@@ -8,23 +8,22 @@ import java.util.List;
 
 import com.github.sardine.DavResource;
 import com.github.sardine.Sardine;
-import com.github.sardine.SardineFactory;
 
 import common.Constants;
 import common.SharepointRessource;
-import util.UserCredentials;
 
 public class Connector {
 	
 	private String url;
-	private UserCredentials userCredentials;
 	private Sardine sardine;
 	
-	public Connector(String url, UserCredentials userCredentials){
+	public Connector(String url, Sardine sardine){
 		this.url = url;
-		this.userCredentials = userCredentials;
-		
-		sardine = SardineFactory.begin(this.userCredentials.getUsername(), this.userCredentials.getPassword());
+		this.sardine = sardine;
+	}
+	
+	public void testConnection() throws IOException{
+		sardine.list(url);
 	}
 	
 	public List<SharepointRessource> getItems(){
