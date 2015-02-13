@@ -60,6 +60,8 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 		viewModel.getSharepointData();
 		structureTree.setRoot(viewModel.getRootNode());
 		structureTree.getRoot().setExpanded(true);
+		
+		viewModel.selectedTreeItemProperty().bind(structureTree.getSelectionModel().selectedItemProperty());
 	}
 	
 	@FXML

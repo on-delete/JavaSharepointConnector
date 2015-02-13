@@ -19,9 +19,10 @@ import de.saxsys.mvvmfx.ViewModel;
 public class SharepointMainViewModel implements ViewModel{
 	
 	private ObjectProperty<String> listRootName = new SimpleObjectProperty<String>();
+	private ObjectProperty selectedTreeItem = new SimpleObjectProperty();
 	
 	private TreeItem<TreeViewListItem> rootNode;
-	
+
 	@Inject
 	TreeViewListModel treeViewListModel;
 	
@@ -29,8 +30,13 @@ public class SharepointMainViewModel implements ViewModel{
 		return listRootName;
 	}
 
-	private SharepointService service;
+	public ObjectProperty selectedTreeItemProperty() {
+		return selectedTreeItem;
+	}
 	
+	private SharepointService service;
+
+
 	@Inject
 	public SharepointMainViewModel(SharepointService service){
 		this.service = service;
@@ -42,41 +48,30 @@ public class SharepointMainViewModel implements ViewModel{
     }
 
 	public void getSharepointData() {
-		List<SharepointModel> sharepointList = service.getSharepointFiles();
-
-		initTreeViewItems(sharepointList);
+		initTreeViewItems();
 	}
 	
-	private void initTreeViewItems(List<SharepointModel> sharepointList){
+	private void initTreeViewItems(){
+		List<SharepointModel> sharepointList = service.getSharepointFiles();
 		String[] splittedUrl = service.getUrl().split("/");
 		TreeViewListItem rootItem = treeViewListModel.getRoot(splittedUrl[splittedUrl.length-1]);
 		
 		rootNode.setValue(rootItem);
 		
-		for(SharepointModel ressource : sharepointList){
-			TreeViewListItem subItem = new TreeViewListItem();
-			
-			if(ressource.isFolder() && ressource.getSubItems()!=null){
-				addSubItems(ressource.getSubItems(), subItem);
-			}
-			
-			subItem.setName(ressource.getDisplayName());
-			
-			rootItem.getSubItems().add(subItem);
-		}
+		addChildItems(sharepointList, rootItem);
 	}
 	
-	private void addSubItems(List<SharepointModel> subList, TreeViewListItem item){
+	private void addChildItems(List<SharepointModel> subList, TreeViewListItem parentItem){
 		for(SharepointModel ressource : subList){
-			TreeViewListItem subItem = new TreeViewListItem();
+			TreeViewListItem childItem = new TreeViewListItem();
 			
 			if(ressource.isFolder() && ressource.getSubItems()!=null){
-				addSubItems(ressource.getSubItems(), subItem);
+				addChildItems(ressource.getSubItems(), childItem);
 			}
 			
-			subItem.setName(ressource.getDisplayName());
+			childItem.setName(ressource.getDisplayName());
 			
-			item.getSubItems().add(subItem);
+			parentItem.getSubItems().add(childItem);
 		}
 	}
 }

@@ -37,26 +37,31 @@ public class SharepointService {
 	}
 	
 	public List<SharepointModel> getSharepointFiles(){
-		List<SharepointModel> list = instance.getItems();
-		
-		for(SharepointModel ressource : list){
-			crawl(ressource);
-		}
-		
-		return list;
+		return instance.getItems();
 	}
 	
-	private void crawl(SharepointModel ressource){
-		if(ressource.isFolder()){
-			if(ressource.getSubItems()!=null && ressource.getSubItems().size()>0 )
-				for(SharepointModel res : ressource.getSubItems()){
-					crawl(res);
-				}
-		}
-		else{
-			//instance.getItem(ressource);
-		}
-	}
+	//TODO function to download the files from sharepoint needs to bew reworked!
+//	public List<SharepointModel> getSharepointFiles(){
+//		List<SharepointModel> list = instance.getItems();
+//		
+//		for(SharepointModel ressource : list){
+//			crawl(ressource);
+//		}
+//		
+//		return list;
+//	}
+//	
+//	private void crawl(SharepointModel ressource){
+//		if(ressource.isFolder()){
+//			if(ressource.getSubItems()!=null && ressource.getSubItems().size()>0 )
+//				for(SharepointModel res : ressource.getSubItems()){
+//					crawl(res);
+//				}
+//		}
+//		else{
+//			//instance.getItem(ressource);
+//		}
+//	}
 	
 	public int testSharepointConnection() {
 		try{
