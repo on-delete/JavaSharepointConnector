@@ -10,7 +10,6 @@ import service.model.SharepointModel;
 
 import com.github.sardine.DavResource;
 import com.github.sardine.Sardine;
-
 import common.Constants;
 
 public class Connector {

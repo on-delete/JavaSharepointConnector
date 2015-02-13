@@ -1,4 +1,4 @@
-package gui.viewmodel;
+package gui.login;
 
 public class LoginViewMockData {
 

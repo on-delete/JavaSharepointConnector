@@ -1,4 +1,4 @@
-package gui.viewmodel;
+package gui.model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

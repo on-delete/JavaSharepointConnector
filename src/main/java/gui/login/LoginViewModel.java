@@ -1,16 +1,19 @@
-package gui.viewmodel;
+package gui.login;
 
-import javax.inject.Inject;
-
-import common.ErrorMessages;
-import service.SharepointService;
-import service.util.UserCredentials;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+
+import javax.inject.Inject;
+
+import service.SharepointService;
+import service.util.UserCredentials;
+
+import common.ErrorMessages;
+
 import de.saxsys.mvvmfx.ViewModel;
 
 public class LoginViewModel implements ViewModel{

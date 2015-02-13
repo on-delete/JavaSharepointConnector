@@ -1,4 +1,4 @@
-package gui.viewmodel;
+package gui.util;
 
 import java.util.List;
 import java.util.stream.Collectors;

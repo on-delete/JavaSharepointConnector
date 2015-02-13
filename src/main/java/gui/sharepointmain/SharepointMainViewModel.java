@@ -1,4 +1,8 @@
-package gui.viewmodel;
+package gui.sharepointmain;
+
+import gui.model.TreeViewListItem;
+import gui.model.TreeViewListModel;
+import gui.util.RecursiveTreeItem;
 
 import java.util.List;
 
@@ -12,7 +16,7 @@ import service.SharepointService;
 import service.model.SharepointModel;
 import de.saxsys.mvvmfx.ViewModel;
 
-public class SharepointViewModel implements ViewModel{
+public class SharepointMainViewModel implements ViewModel{
 	
 	private ObjectProperty<String> listRootName = new SimpleObjectProperty<String>();
 	
@@ -28,7 +32,7 @@ public class SharepointViewModel implements ViewModel{
 	private SharepointService service;
 	
 	@Inject
-	public SharepointViewModel(SharepointService service){
+	public SharepointMainViewModel(SharepointService service){
 		this.service = service;
 		rootNode = new RecursiveTreeItem<>(TreeViewListItem::getSubItems);
 	}

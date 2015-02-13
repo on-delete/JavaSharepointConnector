@@ -1,9 +1,9 @@
 package gui;
 
-import gui.view.LoginView;
-import gui.view.SharepointView;
-import gui.viewmodel.LoginViewModel;
-import gui.viewmodel.SharepointViewModel;
+import gui.login.LoginView;
+import gui.login.LoginViewModel;
+import gui.sharepointmain.SharepointMainView;
+import gui.sharepointmain.SharepointMainViewModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Parent;
@@ -38,7 +38,7 @@ public class ViewController {
 		loginViewModel.isActiveProperty().addListener(new ChangeListener<Boolean>(){
 	        @Override public void changed(ObservableValue o,Boolean oldVal, Boolean newVal){
 	             if(!newVal){
-	            	ViewTuple<SharepointView, SharepointViewModel> sharepointViewTuple = FluentViewLoader.fxmlView(SharepointView.class).load();
+	            	ViewTuple<SharepointMainView, SharepointMainViewModel> sharepointViewTuple = FluentViewLoader.fxmlView(SharepointMainView.class).load();
 	     			
 	     			primaryStage.setScene(new Scene(sharepointViewTuple.getView()));
 	             }

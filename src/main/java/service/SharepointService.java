@@ -5,13 +5,13 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
-import com.github.sardine.Sardine;
-import com.github.sardine.SardineFactory;
-
 import service.connector.Connector;
 import service.model.SharepointModel;
 import service.util.URIEncoder;
 import service.util.UserCredentials;
+
+import com.github.sardine.Sardine;
+import com.github.sardine.SardineFactory;
 import common.ErrorMessages;
 
 @Singleton

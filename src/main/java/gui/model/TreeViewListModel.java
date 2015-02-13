@@ -1,4 +1,4 @@
-package gui.viewmodel;
+package gui.model;
 
 import javax.inject.Singleton;
 

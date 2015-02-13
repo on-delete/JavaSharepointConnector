@@ -8,7 +8,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
 	prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="gui.SharepointView">
+	fx:controller="gui.sharepointmain.SharepointMainView">
 	<children>
 		<Pane fx:id="menuPane" layoutY="-55.0" prefHeight="70.0"
 			prefWidth="800.0" style="-fx-background-color: #58D3F7;">

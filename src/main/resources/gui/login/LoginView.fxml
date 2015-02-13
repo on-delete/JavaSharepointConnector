@@ -9,7 +9,7 @@
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity" prefHeight="257.0"
 	prefWidth="513.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="gui.LoginView">
+	fx:controller="gui.login.LoginView">
 	<children>
 		<AnchorPane style="-fx-background-color: #E6E6E6;"
 			AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
@@ -53,7 +53,7 @@
 				<ImageView fitHeight="150.0" fitWidth="200.0" layoutX="260.0"
 					layoutY="37.0" pickOnBounds="true" preserveRatio="true">
 					<image>
-						<Image url="@../images/saxsol01.png" />
+						<Image url="@../../images/saxsol01.png" />
 					</image>
 				</ImageView>
 			</children>

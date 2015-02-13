@@ -7,8 +7,8 @@ import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
-import org.xml.sax.ContentHandler;
 import org.apache.tika.sax.BodyContentHandler;
+import org.xml.sax.ContentHandler;
 
 public class ParseFile {
 

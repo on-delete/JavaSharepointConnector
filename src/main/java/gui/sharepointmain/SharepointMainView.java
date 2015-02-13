@@ -1,4 +1,6 @@
-package gui.view;
+package gui.sharepointmain;
+
+import gui.model.TreeViewListItem;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,19 +20,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import gui.viewmodel.SharepointViewModel;
-import gui.viewmodel.TreeViewListItem;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 
-public class SharepointView implements FxmlView<SharepointViewModel>, Initializable {
+public class SharepointMainView implements FxmlView<SharepointMainViewModel>, Initializable {
 
 	private boolean isMenuOpen = false;
 	private Image menuDown = new Image("images/triangle_down.png");
 	private Image menuUp = new Image("images/triangle_up.png");
 	
 	@InjectViewModel
-    private SharepointViewModel viewModel;
+    private SharepointMainViewModel viewModel;
 	
 	@FXML
 	Pane menuPane;
