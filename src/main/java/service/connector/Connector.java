@@ -50,6 +50,7 @@ public class Connector {
 		}
 		
 		for(int i = 1; i < resources.size(); i++){
+			isFolder = false;
 			DavResource resource = resources.get(i);
 			String[] splitted = resource.getDisplayName().split("\\.");
 			

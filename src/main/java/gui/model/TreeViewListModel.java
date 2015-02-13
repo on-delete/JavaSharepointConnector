@@ -5,7 +5,13 @@ import javax.inject.Singleton;
 @Singleton
 public class TreeViewListModel {
 
-    public TreeViewListItem getRoot(String name){
-        return new TreeViewListItem(name);
+	private TreeViewListItem rootItem;
+	
+    public void setRoot(String name){
+        rootItem = new TreeViewListItem(name);
+    }
+    
+    public TreeViewListItem getRootItem(){
+    	return this.rootItem;
     }
 }

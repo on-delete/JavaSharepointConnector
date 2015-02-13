@@ -8,6 +8,10 @@ import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
 import javax.inject.Inject;
@@ -17,25 +21,25 @@ import service.model.SharepointModel;
 import de.saxsys.mvvmfx.ViewModel;
 
 public class SharepointMainViewModel implements ViewModel{
-	
-	private ObjectProperty<String> listRootName = new SimpleObjectProperty<String>();
-	private ObjectProperty selectedTreeItem = new SimpleObjectProperty();
+
+	private ObjectProperty<TreeItem<TreeViewListItem>> selectedTreeItem = new SimpleObjectProperty<TreeItem<TreeViewListItem>>();
+	private ObservableList<String> subItems = FXCollections.observableArrayList();
 	
 	private TreeItem<TreeViewListItem> rootNode;
+	private List<SharepointModel> sharepointList;
 
 	@Inject
 	TreeViewListModel treeViewListModel;
-	
-	public ObjectProperty<String> listRootNameProperty() {
-		return listRootName;
-	}
 
-	public ObjectProperty selectedTreeItemProperty() {
+	public ObjectProperty<TreeItem<TreeViewListItem>> selectedTreeItemProperty() {
 		return selectedTreeItem;
 	}
 	
-	private SharepointService service;
+	public ObservableList<String> subItemsProperty() {
+		return subItems;
+	}
 
+	private SharepointService service;
 
 	@Inject
 	public SharepointMainViewModel(SharepointService service){
@@ -46,32 +50,64 @@ public class SharepointMainViewModel implements ViewModel{
     public TreeItem<TreeViewListItem> getRootNode(){
         return rootNode;
     }
-
-	public void getSharepointData() {
-		initTreeViewItems();
-	}
 	
-	private void initTreeViewItems(){
-		List<SharepointModel> sharepointList = service.getSharepointFiles();
+	public void initTreeViewItems(){
+		this.sharepointList = service.getSharepointFiles();
 		String[] splittedUrl = service.getUrl().split("/");
-		TreeViewListItem rootItem = treeViewListModel.getRoot(splittedUrl[splittedUrl.length-1]);
+		treeViewListModel.setRoot(splittedUrl[splittedUrl.length-1]);
+		TreeViewListItem rootItem = treeViewListModel.getRootItem();
 		
 		rootNode.setValue(rootItem);
 		
-		addChildItems(sharepointList, rootItem);
+		addChildItemsTreeView(sharepointList, rootItem);
+
+		setSubListItems(sharepointList);
+		
+		selectedTreeItem.addListener(new ChangeListener<TreeItem<TreeViewListItem>>(){@Override
+			public void changed(
+					ObservableValue<? extends TreeItem<TreeViewListItem>> observable,
+					TreeItem<TreeViewListItem> oldValue,
+					TreeItem<TreeViewListItem> newValue) {
+				if(newValue.getValue().equals(treeViewListModel.getRootItem())){
+					setSubListItems(sharepointList);
+				}
+				else{
+					addSubItemsListView(newValue.getValue().getName(), sharepointList);
+				}
+			}
+	      });
 	}
 	
-	private void addChildItems(List<SharepointModel> subList, TreeViewListItem parentItem){
+	private void addChildItemsTreeView(List<SharepointModel> subList, TreeViewListItem parentItem){
 		for(SharepointModel ressource : subList){
 			TreeViewListItem childItem = new TreeViewListItem();
 			
 			if(ressource.isFolder() && ressource.getSubItems()!=null){
-				addChildItems(ressource.getSubItems(), childItem);
+				addChildItemsTreeView(ressource.getSubItems(), childItem);
+				childItem.setName(ressource.getDisplayName());
+				parentItem.getSubItems().add(childItem);
 			}
-			
-			childItem.setName(ressource.getDisplayName());
-			
-			parentItem.getSubItems().add(childItem);
+		}
+	}
+	
+	private void addSubItemsListView(String itemName, List<SharepointModel> subSharepointList){
+		if(subSharepointList!=null){
+			for(SharepointModel subItem : subSharepointList){
+				if(subItem.getDisplayName().equals(itemName)){
+					setSubListItems(subItem.getSubItems());
+				}
+				else{
+					addSubItemsListView(itemName, subItem.getSubItems());
+				}
+			}
+		}
+	}
+	
+	private void setSubListItems(List<SharepointModel> subSharepointList){
+		subItems.clear();
+		
+		for(SharepointModel subItem : subSharepointList){
+			subItems.add(subItem.getDisplayName());
 		}
 	}
 }

@@ -51,17 +51,19 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 	TreeView<TreeViewListItem> structureTree;
 	
 	@FXML
-	ListView filesListView;
+	ListView<String> filesListView;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		mainSplitPane.setDividerPositions(0.3f);
 		
-		viewModel.getSharepointData();
+		viewModel.initTreeViewItems();
 		structureTree.setRoot(viewModel.getRootNode());
 		structureTree.getRoot().setExpanded(true);
 		
 		viewModel.selectedTreeItemProperty().bind(structureTree.getSelectionModel().selectedItemProperty());
+		
+		filesListView.setItems(viewModel.subItemsProperty());
 	}
 	
 	@FXML
