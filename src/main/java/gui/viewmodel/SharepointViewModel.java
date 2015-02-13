@@ -4,14 +4,12 @@ import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TreeItem;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import common.SharepointRessource;
 import service.SharepointService;
+import service.model.SharepointModel;
 import de.saxsys.mvvmfx.ViewModel;
 
 public class SharepointViewModel implements ViewModel{
@@ -40,17 +38,18 @@ public class SharepointViewModel implements ViewModel{
     }
 
 	public void getSharepointData() {
-		List<SharepointRessource> sharepointList = service.getSharepointFiles();
+		List<SharepointModel> sharepointList = service.getSharepointFiles();
 
 		initTreeViewItems(sharepointList);
 	}
 	
-	private void initTreeViewItems(List<SharepointRessource> sharepointList){
-		TreeViewListItem rootItem = treeViewListModel.getRoot("ISODokumentenablage");
+	private void initTreeViewItems(List<SharepointModel> sharepointList){
+		String[] splittedUrl = service.getUrl().split("/");
+		TreeViewListItem rootItem = treeViewListModel.getRoot(splittedUrl[splittedUrl.length-1]);
 		
 		rootNode.setValue(rootItem);
 		
-		for(SharepointRessource ressource : sharepointList){
+		for(SharepointModel ressource : sharepointList){
 			TreeViewListItem subItem = new TreeViewListItem();
 			
 			if(ressource.isFolder() && ressource.getSubItems()!=null){
@@ -63,8 +62,8 @@ public class SharepointViewModel implements ViewModel{
 		}
 	}
 	
-	private void addSubItems(List<SharepointRessource> subList, TreeViewListItem item){
-		for(SharepointRessource ressource : subList){
+	private void addSubItems(List<SharepointModel> subList, TreeViewListItem item){
+		for(SharepointModel ressource : subList){
 			TreeViewListItem subItem = new TreeViewListItem();
 			
 			if(ressource.isFolder() && ressource.getSubItems()!=null){

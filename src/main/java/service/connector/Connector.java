@@ -1,4 +1,4 @@
-package connector;
+package service.connector;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import service.model.SharepointModel;
+
 import com.github.sardine.DavResource;
 import com.github.sardine.Sardine;
 
 import common.Constants;
-import common.SharepointRessource;
 
 public class Connector {
 	
@@ -26,8 +27,8 @@ public class Connector {
 		sardine.list(url);
 	}
 	
-	public List<SharepointRessource> getItems(){
-		List<SharepointRessource> itemList = new ArrayList<SharepointRessource>();
+	public List<SharepointModel> getItems(){
+		List<SharepointModel> itemList = new ArrayList<SharepointModel>();
 		boolean isFolder = false;
 		
 		List<DavResource> resources = new ArrayList<DavResource>();
@@ -43,10 +44,10 @@ public class Connector {
 			String[] splitted = ressource.getDisplayName().split("\\.");
 			
 			/*Ordner und Dateien mit Endung .aspx werden ignoriert, da es keine Zugriffsberechtigung über diese Funktion gibt.*/
-			if(!splitted[splitted.length-1].equals("aspx")){
+			if(!splitted[splitted.length-1].equals("aspx") && !splitted[0].equals("Forms")){
 				if (ressource.getCustomProps().get("isFolder") != null) {
 					isFolder = true;
-					SharepointRessource sharepointRessource = mapRessources(ressource, isFolder);
+					SharepointModel sharepointRessource = mapRessources(ressource, isFolder);
 					itemList.add(sharepointRessource);
 					getItems(sharepointRessource);
 				}
@@ -59,7 +60,7 @@ public class Connector {
 		return itemList;
 	}
 	
-	private void getItems(SharepointRessource sharepointRessource){
+	private void getItems(SharepointModel sharepointRessource){
 		boolean isFolder = false;
 		
 		List<DavResource> resources = new ArrayList<DavResource>();
@@ -75,12 +76,12 @@ public class Connector {
 			String[] splitted = ressource.getDisplayName().split("\\.");
 			
 			/*Ordner und Dateien mit Endung .aspx werden ignoriert, da es keine Zugriffsberechtigung über diese Funktion gibt.*/
-			if(!splitted[splitted.length-1].equals("aspx")){
+			if(!splitted[splitted.length-1].equals("aspx") && !splitted[0].equals("Forms")){
 				if (ressource.getCustomProps().get("isFolder") != null) {
 					isFolder = true;
-					SharepointRessource sharepointRessourceNew = mapRessources(ressource, isFolder);
+					SharepointModel sharepointRessourceNew = mapRessources(ressource, isFolder);
 					if(sharepointRessource.getSubItems()==null){
-						sharepointRessource.setSubItems(new ArrayList<SharepointRessource>());
+						sharepointRessource.setSubItems(new ArrayList<SharepointModel>());
 					}
 					
 					sharepointRessource.getSubItems().add(sharepointRessourceNew);
@@ -88,7 +89,7 @@ public class Connector {
 				}
 				else{
 					if(sharepointRessource.getSubItems()==null){
-						sharepointRessource.setSubItems(new ArrayList<SharepointRessource>());
+						sharepointRessource.setSubItems(new ArrayList<SharepointModel>());
 					}
 						
 					sharepointRessource.getSubItems().add(mapRessources(ressource, isFolder));
@@ -97,8 +98,8 @@ public class Connector {
 		}
 	}
 	
-	private SharepointRessource mapRessources(DavResource ressource, boolean isFolder){
-		SharepointRessource sharepointRessource;
+	private SharepointModel mapRessources(DavResource ressource, boolean isFolder){
+		SharepointModel sharepointRessource;
 		
 		Date creation = null;
 		Date lastModified = null;
@@ -112,21 +113,21 @@ public class Connector {
 		displayName = ressource.getDisplayName();
 		
 		if(isFolder){
-			sharepointRessource = new SharepointRessource(creation, lastModified, displayName, href, isFolder);
+			sharepointRessource = new SharepointModel(creation, lastModified, displayName, href, isFolder);
 		}
 		else{
 			if(ressource.getCustomProps().get("modifiedby") != null){
 				modifiedBy = ressource.getCustomProps().get("modifiedby");
-				sharepointRessource = new SharepointRessource(creation, lastModified, displayName, href, isFolder, modifiedBy);
+				sharepointRessource = new SharepointModel(creation, lastModified, displayName, href, isFolder, modifiedBy);
 			}
 			else
-				sharepointRessource = new SharepointRessource(creation, lastModified, displayName, href, isFolder, null);
+				sharepointRessource = new SharepointModel(creation, lastModified, displayName, href, isFolder, null);
 		}
 		
 		return sharepointRessource;
 	}
 	
-	public void getItem(SharepointRessource ressource){
+	public void getItem(SharepointModel ressource){
 		try {
 			InputStream is = sardine.get(Constants.sharepointURL+ressource.getHrefAsURI());
 			

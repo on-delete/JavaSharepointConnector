@@ -1,4 +1,4 @@
-package util;
+package service.util;
 
 public class UserCredentials {
 

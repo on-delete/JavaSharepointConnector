@@ -1,11 +1,11 @@
-package common;
+package service.model;
 
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class SharepointRessource {
+public class SharepointModel {
 	
 	private String creation;
 	private String lastModified;
@@ -15,7 +15,7 @@ public class SharepointRessource {
 	private String downloadLocation = null;
 	private String project = null;
 	private boolean isFolder;
-	private List<SharepointRessource> subItems = null;
+	private List<SharepointModel> subItems = null;
 	private InputStream fileContent = null;
 	
 	/**
@@ -25,7 +25,7 @@ public class SharepointRessource {
 	 * @param last_modified
 	 * @param isFolder
 	 */
-	public SharepointRessource(Date creation, Date lastModified, String displayName, String href, boolean isFolder, String modifiedBy) {
+	public SharepointModel(Date creation, Date lastModified, String displayName, String href, boolean isFolder, String modifiedBy) {
 		super();
 		setCreation(creation);
 		setLastModified(lastModified);
@@ -42,7 +42,7 @@ public class SharepointRessource {
 	 * @param last_modified
 	 * @param isFolder
 	 */
-	public SharepointRessource(Date creation, Date lastModified, String displayName, String href, boolean isFolder) {
+	public SharepointModel(Date creation, Date lastModified, String displayName, String href, boolean isFolder) {
 		super();
 		setCreation(creation);
 		setLastModified(lastModified);
@@ -132,12 +132,12 @@ public class SharepointRessource {
 		this.isFolder = isFolder;
 	}
 
-	public List<SharepointRessource> getSubItems() {
+	public List<SharepointModel> getSubItems() {
 		return subItems;
 	}
 	
 	
-	public void setSubItems(List<SharepointRessource> subItems) {
+	public void setSubItems(List<SharepointModel> subItems) {
 		this.subItems = subItems;
 	}
 

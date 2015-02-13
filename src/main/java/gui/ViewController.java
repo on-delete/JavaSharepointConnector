@@ -1,5 +1,7 @@
 package gui;
 
+import gui.view.LoginView;
+import gui.view.SharepointView;
 import gui.viewmodel.LoginViewModel;
 import gui.viewmodel.SharepointViewModel;
 import javafx.beans.value.ChangeListener;

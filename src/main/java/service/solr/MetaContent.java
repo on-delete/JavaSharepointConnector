@@ -1,4 +1,4 @@
-package solr;
+package service.solr;
 
 public class MetaContent {
 

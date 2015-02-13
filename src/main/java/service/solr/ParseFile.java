@@ -1,4 +1,4 @@
-package solr;
+package service.solr;
 
 import java.io.File;
 import java.io.InputStream;

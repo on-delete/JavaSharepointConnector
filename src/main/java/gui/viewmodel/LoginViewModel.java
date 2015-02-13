@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import common.ErrorMessages;
 import service.SharepointService;
-import util.UserCredentials;
+import service.util.UserCredentials;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;

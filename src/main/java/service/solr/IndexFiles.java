@@ -1,3 +1,4 @@
+package service.solr;
 //package solr;
 //
 //import java.io.File;

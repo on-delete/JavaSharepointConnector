@@ -1,8 +1,5 @@
 package gui.viewmodel;
 
-import java.util.Collections;
-import java.util.Comparator;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -24,7 +21,6 @@ public class TreeViewListItem {
                     change.getAddedSubList().forEach(item -> {
                         item.setParent(TreeViewListItem.this);
                     });
-                    
                 }
 
                 if (change.wasRemoved()) {

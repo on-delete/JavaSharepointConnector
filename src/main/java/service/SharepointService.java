@@ -8,10 +8,11 @@ import javax.inject.Singleton;
 import com.github.sardine.Sardine;
 import com.github.sardine.SardineFactory;
 
-import util.UserCredentials;
+import service.connector.Connector;
+import service.model.SharepointModel;
+import service.util.URIEncoder;
+import service.util.UserCredentials;
 import common.ErrorMessages;
-import common.SharepointRessource;
-import connector.Connector;
 
 @Singleton
 public class SharepointService {
@@ -19,30 +20,36 @@ public class SharepointService {
 	private Connector instance;
 	private Sardine sardine;
 	
+	private String url;
+	private UserCredentials userCredentials;
+	
 	public SharepointService(){
 
 	}
 	
 	public void initialize(String url, UserCredentials userCredentials){
+		this.url = url;
+		this.userCredentials = userCredentials;
+		
 		sardine = SardineFactory.begin(userCredentials.getUsername(), userCredentials.getPassword());
 		
-		instance = new Connector(url, sardine);
+		instance = new Connector(URIEncoder.encodeURI(url), sardine);
 	}
 	
-	public List<SharepointRessource> getSharepointFiles(){
-		List<SharepointRessource> list = instance.getItems();
+	public List<SharepointModel> getSharepointFiles(){
+		List<SharepointModel> list = instance.getItems();
 		
-		for(SharepointRessource ressource : list){
+		for(SharepointModel ressource : list){
 			crawl(ressource);
 		}
 		
 		return list;
 	}
 	
-	private void crawl(SharepointRessource ressource){
+	private void crawl(SharepointModel ressource){
 		if(ressource.isFolder()){
 			if(ressource.getSubItems()!=null && ressource.getSubItems().size()>0 )
-				for(SharepointRessource res : ressource.getSubItems()){
+				for(SharepointModel res : ressource.getSubItems()){
 					crawl(res);
 				}
 		}
@@ -70,5 +77,13 @@ public class SharepointService {
 				return ErrorMessages.INTERNAL_ERROR;
 			}
 		}
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public UserCredentials getUserCredentials() {
+		return userCredentials;
 	}
 }
