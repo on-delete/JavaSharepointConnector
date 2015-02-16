@@ -1,9 +1,12 @@
 package gui.sharepointmain;
 
+import gui.model.ListViewItem;
 import gui.model.TreeViewListItem;
 import gui.model.TreeViewListModel;
 import gui.util.RecursiveTreeItem;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
@@ -23,7 +26,7 @@ import de.saxsys.mvvmfx.ViewModel;
 public class SharepointMainViewModel implements ViewModel{
 
 	private ObjectProperty<TreeItem<TreeViewListItem>> selectedTreeItem = new SimpleObjectProperty<TreeItem<TreeViewListItem>>();
-	private ObservableList<String> subItems = FXCollections.observableArrayList();
+	private ObservableList<ListViewItem> subItems = FXCollections.observableArrayList();
 	
 	private TreeItem<TreeViewListItem> rootNode;
 	private List<SharepointModel> sharepointList;
@@ -35,7 +38,7 @@ public class SharepointMainViewModel implements ViewModel{
 		return selectedTreeItem;
 	}
 	
-	public ObservableList<String> subItemsProperty() {
+	public ObservableList<ListViewItem> subItemsProperty() {
 		return subItems;
 	}
 
@@ -63,12 +66,18 @@ public class SharepointMainViewModel implements ViewModel{
 
 		setSubListItems(sharepointList);
 		
-		selectedTreeItem.addListener(new ChangeListener<TreeItem<TreeViewListItem>>(){@Override
+		selectedTreeItem.addListener(new ChangeListener<TreeItem<TreeViewListItem>>(){
+			
+			@Override
 			public void changed(
 					ObservableValue<? extends TreeItem<TreeViewListItem>> observable,
 					TreeItem<TreeViewListItem> oldValue,
 					TreeItem<TreeViewListItem> newValue) {
-				if(newValue.getValue().equals(treeViewListModel.getRootItem())){
+				if(newValue==null){
+					//In this case, the parent tree item is closed, so that in the first change the new tree item is null, this should be catched here.
+					//In the next change the value is set to the closed parent tree item.
+				}
+				else if(newValue.getValue().equals(treeViewListModel.getRootItem())){
 					setSubListItems(sharepointList);
 				}
 				else{
@@ -107,7 +116,24 @@ public class SharepointMainViewModel implements ViewModel{
 		subItems.clear();
 		
 		for(SharepointModel subItem : subSharepointList){
-			subItems.add(subItem.getDisplayName());
+			subItems.add(new ListViewItem(subItem.getDisplayName(), subItem.isFolder()));
 		}
+		
+		Collections.sort(subItems, comparatorByIsFolder);
 	}
+	
+	private Comparator<? super ListViewItem> comparatorByIsFolder = new Comparator<ListViewItem>() {
+        @Override
+        public int compare(ListViewItem o1, ListViewItem o2) {
+        	boolean v1 = o1.isFolder();
+            boolean v2 = o2.isFolder();
+            if( v1 && ! v2 ) {
+                return -1;
+            }
+            if( ! v1 && v2 ) {
+                return +1;
+            }
+            return 0;
+        }
+    };
 }

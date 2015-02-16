@@ -1,8 +1,12 @@
 package service.connector;
 
+import gui.model.TreeViewListItem;
+
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -65,6 +69,8 @@ public class Connector {
 				else{
 					subList.add(mapRessources(resource, isFolder));
 				}
+				
+				Collections.sort(subList, comparatorByItemNameObject);
 			}
 		}
 	}
@@ -113,4 +119,11 @@ public class Connector {
 			e.printStackTrace();
 		}
 	}*/
+	
+	private Comparator<? super SharepointModel> comparatorByItemNameObject = new Comparator<SharepointModel>() {
+        @Override
+        public int compare(SharepointModel o1, SharepointModel o2) {
+            return o1.getDisplayName().compareToIgnoreCase(o2.getDisplayName());
+        }
+    };
 }

@@ -48,7 +48,7 @@ public class TreeViewListItem {
 	public String getName() {
         return this.name.get();
     }
-	
+
 	public ObservableList<TreeViewListItem> getSubItems(){
         return subItems;
     }

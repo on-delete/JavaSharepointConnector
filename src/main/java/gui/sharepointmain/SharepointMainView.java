@@ -1,5 +1,6 @@
 package gui.sharepointmain;
 
+import gui.model.ListViewItem;
 import gui.model.TreeViewListItem;
 
 import java.net.URL;
@@ -51,7 +52,7 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 	TreeView<TreeViewListItem> structureTree;
 	
 	@FXML
-	ListView<String> filesListView;
+	ListView<ListViewItem> filesListView;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

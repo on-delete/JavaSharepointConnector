@@ -3,6 +3,7 @@ package gui.login;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
@@ -14,12 +15,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import common.ErrorMessages;
-
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 
@@ -46,6 +47,12 @@ public class LoginView implements FxmlView<LoginViewModel>, Initializable {
 	@FXML 
 	private Button closeButton;
 	
+	@FXML
+	private Label progressBarLabel;
+	
+	@FXML
+	private ProgressBar progressBar;
+	
 	private IntegerProperty errorMessage = new SimpleIntegerProperty();
 	
 	@Override
@@ -53,6 +60,8 @@ public class LoginView implements FxmlView<LoginViewModel>, Initializable {
 		usernameField.textProperty().bindBidirectional(viewModel.usernameProperty());
 		passwortField.textProperty().bindBidirectional(viewModel.passwordProperty());
 		addressField.textProperty().bindBidirectional(viewModel.addressProperty());
+		progressBarLabel.textProperty().bind(viewModel.progressStatusProperty());
+		progressBar.progressProperty().bind(viewModel.loginWorkerProperty().get().progressProperty());
 		errorMessage.bind(viewModel.errorMessageProperty());
 		
 		errorMessage.addListener(new ChangeListener<Number>(){
@@ -82,10 +91,15 @@ public class LoginView implements FxmlView<LoginViewModel>, Initializable {
 	}
 
 	private void showErrorMessage(String errorMessage){
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Fehler");
-		alert.setHeaderText("Es ist ein Fehler aufgetreten!");
-		alert.setContentText(errorMessage);
-		alert.show();
+		Platform.runLater(new Runnable(){
+			@Override
+			public void run() {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Fehler");
+				alert.setHeaderText("Es ist ein Fehler aufgetreten!");
+				alert.setContentText(errorMessage);
+				alert.show();
+			}
+		});
 	}
 }
