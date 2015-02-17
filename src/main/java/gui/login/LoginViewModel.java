@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
@@ -32,7 +31,6 @@ public class LoginViewModel implements ViewModel{
 	
 	private UserCredentials userCredentials;
 	private SharepointService service;
-	private Thread loginWorkerThread;
 	
 	@Inject
 	public LoginViewModel(SharepointService service){

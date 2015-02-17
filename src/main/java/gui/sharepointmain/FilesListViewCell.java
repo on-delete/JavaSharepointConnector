@@ -1,10 +1,7 @@
 package gui.sharepointmain;
 
-
-
 import common.Constants;
 import gui.model.ListViewItem;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -20,11 +17,11 @@ public class FilesListViewCell extends ListCell<ListViewItem> {
 	public void updateItem(ListViewItem listViewItem, boolean empty){
 		this.listViewItem = listViewItem;
 		super.updateItem(listViewItem,empty);
-	    if(listViewItem!=null){
-	    	setGraphic(createListCellContent());
+	    if(empty){
+	    	setGraphic(null);
 	    }
 	    else{
-	    	setGraphic(null);
+	    	setGraphic(createListCellContent());
 	    }
 	}	
 	

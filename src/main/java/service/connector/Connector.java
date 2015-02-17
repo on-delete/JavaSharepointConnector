@@ -1,7 +1,5 @@
 package service.connector;
 
-import gui.model.TreeViewListItem;
-
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;

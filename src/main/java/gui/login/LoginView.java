@@ -65,7 +65,7 @@ public class LoginView implements FxmlView<LoginViewModel>, Initializable {
 		errorMessage.bind(viewModel.errorMessageProperty());
 		
 		errorMessage.addListener(new ChangeListener<Number>(){
-	        @Override public void changed(ObservableValue o,Number oldVal, Number newVal){
+	        @Override public void changed(ObservableValue<? extends Number> o,Number oldVal, Number newVal){
 	             if((Integer)newVal == ErrorMessages.INTERNAL_ERROR){
 	            	 showErrorMessage(ErrorMessages.INTERNAL_ERROR_TEXT);
 	             }

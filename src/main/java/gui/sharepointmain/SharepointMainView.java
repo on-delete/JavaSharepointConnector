@@ -12,9 +12,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -65,7 +67,12 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 		viewModel.initTreeViewItems();
 		structureTree.setRoot(viewModel.getRootNode());
 		structureTree.getRoot().setExpanded(true);
-		
+		structureTree.setCellFactory(new Callback<TreeView<TreeViewListItem>, TreeCell<TreeViewListItem>>(){
+			@Override
+			public TreeCell<TreeViewListItem> call(TreeView<TreeViewListItem> param) {
+				return new StructureTreeViewCell();
+			}
+		});
 		viewModel.selectedTreeItemProperty().bind(structureTree.getSelectionModel().selectedItemProperty());
 		
 		filesListView.setItems(viewModel.subItemsProperty());
@@ -75,6 +82,8 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 				return new FilesListViewCell();
 			}
 		});
+		filesListView.setPlaceholder(new Label("Dieser Ordner ist leer."));
+		
 	}
 	
 	@FXML
