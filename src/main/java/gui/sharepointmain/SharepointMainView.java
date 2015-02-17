@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeView;
@@ -20,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
@@ -65,6 +67,12 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 		viewModel.selectedTreeItemProperty().bind(structureTree.getSelectionModel().selectedItemProperty());
 		
 		filesListView.setItems(viewModel.subItemsProperty());
+//		filesListView.setCellFactory(new Callback<ListView<ListViewItem>, ListCell<ListViewItem>>(){
+//			@Override
+//			public ListCell<ListViewItem> call(ListView<ListViewItem> param) {
+//				return new FilesListViewCell();
+//			}
+//		});
 	}
 	
 	@FXML

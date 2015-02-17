@@ -61,7 +61,7 @@ public class LoginView implements FxmlView<LoginViewModel>, Initializable {
 		passwortField.textProperty().bindBidirectional(viewModel.passwordProperty());
 		addressField.textProperty().bindBidirectional(viewModel.addressProperty());
 		progressBarLabel.textProperty().bind(viewModel.progressStatusProperty());
-		progressBar.progressProperty().bind(viewModel.loginWorkerProperty().get().progressProperty());
+		progressBar.setProgress(0);
 		errorMessage.bind(viewModel.errorMessageProperty());
 		
 		errorMessage.addListener(new ChangeListener<Number>(){
@@ -81,7 +81,9 @@ public class LoginView implements FxmlView<LoginViewModel>, Initializable {
 
 	@FXML 
 	public void login(ActionEvent event) {
+		progressBar.progressProperty().bind(viewModel.loginWorkerProperty().get().progressProperty());
 		viewModel.login();
+
 	}
 	
 	@FXML
@@ -94,6 +96,8 @@ public class LoginView implements FxmlView<LoginViewModel>, Initializable {
 		Platform.runLater(new Runnable(){
 			@Override
 			public void run() {
+				progressBar.progressProperty().unbind();
+				progressBar.setProgress(0);
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Fehler");
 				alert.setHeaderText("Es ist ein Fehler aufgetreten!");
