@@ -1,20 +1,21 @@
 package gui.sharepointmain;
 
+
+
+import common.Constants;
 import gui.model.ListViewItem;
-import javafx.scene.Node;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 
 public class FilesListViewCell extends ListCell<ListViewItem> {
 
-	private HBox listCellContent;
 	private ListViewItem listViewItem;
-	private String[] iconSet = {"bmp", "c", "cpp", "css", "dat", "doc", "docx", "exe", "gif", "html", "java", "jpg", "js", "pdf", "php", "png", "ppt", "pptx", "py", "rar",
-								"rtf", "sql", "txt", "xls", "xlsx", "xml", "zip"};
 
-	
 	@Override
 	public void updateItem(ListViewItem listViewItem, boolean empty){
 		this.listViewItem = listViewItem;
@@ -22,24 +23,40 @@ public class FilesListViewCell extends ListCell<ListViewItem> {
 	    if(listViewItem!=null){
 	    	setGraphic(createListCellContent());
 	    }
+	    else{
+	    	setGraphic(null);
+	    }
 	}	
 	
 	private HBox createListCellContent(){
-		if(listCellContent==null){
-			listCellContent = new HBox();
-		}
-		
+		HBox listCellContent = new HBox();
+		listCellContent.setSpacing(10);
 		listCellContent.getChildren().add(createItemImage());
 		listCellContent.getChildren().add(createItemLabel());
+
 		return listCellContent;
 	}
 
-	private ImageView createItemLabel() {
-		return new ImageView(new Image("images/triangle_down.png"));
+	private Label createItemLabel() {
+		Label itemLabel = new Label(listViewItem.getName());
+		itemLabel.setFont(Font.font("Segoe UI Symbol", 12));
+		
+		return itemLabel;
 	}
 
-	private Node createItemImage() {
-		// TODO Auto-generated method stub
-		return null;
+	private ImageView createItemImage() {
+		if(listViewItem.isFolder()){
+			return new ImageView(new Image("images/icons/folder.png"));
+		}
+		else{
+			String[] seperated = listViewItem.getName().split("\\.");
+			String fileExtension = seperated[seperated.length-1];
+			if(Constants.ICON_SET.contains(fileExtension)){
+				return new ImageView(new Image("images/icons/"+fileExtension+".png"));
+			}
+			else{
+				return new ImageView(new Image("images/icons/blank.png"));
+			}
+		}
 	}
 }

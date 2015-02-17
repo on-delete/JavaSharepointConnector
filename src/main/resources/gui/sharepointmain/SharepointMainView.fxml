@@ -22,9 +22,6 @@
 							<children>
 								<ImageView fx:id="menuTriggerImage" fitHeight="11.0"
 									fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
-									<image>
-										<Image url="@../images/triangle_down.png" />
-									</image>
 								</ImageView>
 							</children>
 						</HBox>

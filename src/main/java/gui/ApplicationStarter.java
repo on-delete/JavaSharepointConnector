@@ -1,9 +1,9 @@
 package gui;
 
-import de.saxsys.mvvmfx.cdi.MvvmfxCdiApplication;
+import de.saxsys.mvvmfx.guice.MvvmfxGuiceApplication;
 import javafx.stage.Stage;
 
-public class ApplicationStarter extends MvvmfxCdiApplication{
+public class ApplicationStarter extends MvvmfxGuiceApplication{
 
 	public static void main(String[] args){
 		launch(args);

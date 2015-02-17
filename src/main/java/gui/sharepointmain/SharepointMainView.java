@@ -60,6 +60,8 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 	public void initialize(URL location, ResourceBundle resources) {
 		mainSplitPane.setDividerPositions(0.3f);
 		
+		menuTriggerImage.setImage(menuDown);
+		
 		viewModel.initTreeViewItems();
 		structureTree.setRoot(viewModel.getRootNode());
 		structureTree.getRoot().setExpanded(true);
@@ -67,12 +69,12 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 		viewModel.selectedTreeItemProperty().bind(structureTree.getSelectionModel().selectedItemProperty());
 		
 		filesListView.setItems(viewModel.subItemsProperty());
-//		filesListView.setCellFactory(new Callback<ListView<ListViewItem>, ListCell<ListViewItem>>(){
-//			@Override
-//			public ListCell<ListViewItem> call(ListView<ListViewItem> param) {
-//				return new FilesListViewCell();
-//			}
-//		});
+		filesListView.setCellFactory(new Callback<ListView<ListViewItem>, ListCell<ListViewItem>>(){
+			@Override
+			public ListCell<ListViewItem> call(ListView<ListViewItem> param) {
+				return new FilesListViewCell();
+			}
+		});
 	}
 	
 	@FXML
