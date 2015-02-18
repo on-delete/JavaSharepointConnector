@@ -24,7 +24,7 @@ public class StructureTreeViewCell extends TreeCell<TreeViewListItem>{
 	
 	private HBox createTreeCellContent(){
 		HBox treeCellContent = new HBox();
-		treeCellContent.setSpacing(10);
+		treeCellContent.setSpacing(6);
 		treeCellContent.getChildren().add(createItemImage());
 		treeCellContent.getChildren().add(createItemLabel());
 
@@ -33,7 +33,7 @@ public class StructureTreeViewCell extends TreeCell<TreeViewListItem>{
 
 	private Label createItemLabel() {
 		Label itemLabel = new Label(item.getName());
-		itemLabel.setFont(Font.font("Segoe UI Symbol", 12));
+		itemLabel.setFont(Font.font("Segoe UI", 12));
 		
 		return itemLabel;
 	}

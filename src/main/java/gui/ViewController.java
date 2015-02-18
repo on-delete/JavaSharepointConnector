@@ -1,5 +1,7 @@
 package gui;
 
+import common.Constants;
+
 import gui.login.LoginView;
 import gui.login.LoginViewModel;
 import gui.sharepointmain.SharepointMainView;
@@ -22,16 +24,27 @@ public class ViewController {
 		
 		this.primaryStage.setTitle("JavaSharepointConnector");
 
-	    ViewTuple<LoginView, LoginViewModel> loginViewTuple = FluentViewLoader.fxmlView(LoginView.class).load();
-	    LoginViewModel loginViewModel = loginViewTuple.getViewModel();
-	    
-	    Parent root = loginViewTuple.getView();
-	    this.primaryStage.setScene(new Scene(root));
-	    this.primaryStage.setResizable(false);
-	    this.primaryStage.initStyle(StageStyle.UTILITY);
-	    this.primaryStage.show();
-	    
-	    setChangeListenerForView(loginViewModel);
+		if(Constants.WITHOUT_LOGIN){
+			ViewTuple<SharepointMainView, SharepointMainViewModel> viewTuple = FluentViewLoader.fxmlView(SharepointMainView.class).load();
+			
+			Parent root = viewTuple.getView();
+		    this.primaryStage.setScene(new Scene(root));
+		    this.primaryStage.setResizable(false);
+		    //this.primaryStage.initStyle(StageStyle.UTILITY);
+		    this.primaryStage.show();
+		}
+		else{
+			ViewTuple<LoginView, LoginViewModel> viewTuple = FluentViewLoader.fxmlView(LoginView.class).load();
+		    LoginViewModel loginViewModel = viewTuple.getViewModel();
+		    
+		    Parent root = viewTuple.getView();
+		    this.primaryStage.setScene(new Scene(root));
+		    this.primaryStage.setResizable(false);
+		    //this.primaryStage.initStyle(StageStyle.UTILITY);
+		    this.primaryStage.show();
+		    
+		    setChangeListenerForView(loginViewModel);
+		}
 	}
 	
 	private void setChangeListenerForView(LoginViewModel loginViewModel){

@@ -1,0 +1,217 @@
+/*Buttons */
+
+.button {
+    -fx-padding: 5 10 5 10;   
+    -fx-border-style: null; 
+    -fx-background-radius: 0;
+ 
+    -fx-background-color: #cccccc;
+   
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+    -fx-text-fill: black;
+}
+ 
+.button:hover{
+    -fx-background-color: #d8d8d8;
+}
+ 
+.button:pressed, .button:default:hover:pressed
+{
+  -fx-background-color: black;
+  -fx-text-fill: white;
+}
+ 
+.button:focused
+{
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-border-style: segments(1, 1);
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;   
+}
+ 
+.button:disabled, .button:default:disabled
+{
+    -fx-opacity: 0.4;
+    -fx-background-color: #cccccc;
+    -fx-text-fill: #212121;
+}
+ 
+.button:default
+{
+    -fx-background-color: #008287;
+    -fx-text-fill: #ffffff;
+}
+ 
+.button:default:hover{
+    -fx-background-color: #219297;
+}
+
+/*Textfields */
+.text-field {
+	-fx-border-style: null; 
+    -fx-background-radius: 0;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+    -fx-text-fill: black;
+}
+
+/*Labels */
+.label{
+	-fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 10pt;
+    -fx-text-fill: black;
+}
+
+/*progressBar */
+.progress-bar > .bar{
+	-fx-background-color: #008287;
+    -fx-background-radius: 0;
+    -fx-background-insets: 1;
+}
+.progress-bar > .track{
+	-fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+/*TreeView */
+.tree-view * .scroll-bar > .thumb{
+    -fx-background-color: #cdcdcd;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+
+.tree-view * .scroll-bar > .thumb:hover {
+    -fx-background-color: #dadada;
+}
+
+.tree-view * .scroll-bar > .thumb:pressed {
+    -fx-background-color: #606060;
+}
+
+.tree-view * .scroll-bar > .track {
+    -fx-background-color: #f0f0f0;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+.tree-view * .scroll-bar > .track-background {
+    -fx-background-color: #f0f0f0;
+    -fx-background-insets: 0;
+}
+
+.tree-view * .scroll-bar > .increment-button,
+.tree-view * .scroll-bar > .decrement-button {
+    -fx-background-color: #f0f0f0;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    
+    -fx-padding: 0.25em; /* 3 */
+}
+
+.tree-view * .scroll-bar > .increment-button:hover,
+.tree-view * .scroll-bar > .decrement-button:hover  {
+    -fx-background-color: #dadada;
+}
+
+.tree-view * .scroll-bar > .increment-button:pressed,
+.tree-view * .scroll-bar > .decrement-button:pressed {
+    -fx-background-color: #606060;
+}
+
+.tree-view * .scroll-bar > .decrement-button > .decrement-arrow,
+.tree-view * .scroll-bar > .increment-button > .increment-arrow{
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-background-color: transparent, #606060;
+    -fx-effect: null;
+}
+
+.tree-view * .scroll-bar > .decrement-button:pressed > .decrement-arrow,
+.tree-view * .scroll-bar > .increment-button:pressed > .increment-arrow {
+    -fx-background-color: transparent, white;
+    -fx-effect: null;
+}
+
+.tree-view * .scroll-bar:vertical > .increment-button > .increment-arrow,
+.tree-view * .scroll-bar:vertical > .decrement-button > .decrement-arrow {
+    -fx-padding: 0.333333em 0.5em 0.0em 0.0em; /* 4 6 0 0 */
+}
+
+.tree-view * .scroll-bar:horizontal > .increment-button > .increment-arrow,
+.tree-view * .scroll-bar:horizontal > .decrement-button > .decrement-arrow {
+    -fx-padding: 0.5em 0.333333em 0.0em 0.0em; /* 6 4 0 0 */
+}
+
+.tree-view * .scroll-bar:disabled {
+    -fx-opacity: 0.4;
+}
+
+/* ARROW SHAPES */
+.tree-view * .scroll-bar:horizontal > .decrement-button > .decrement-arrow {
+    -fx-shape: "M11,17H8.111l-3.86-4.124l3.86-4.125H11l-3.375,4.125L11,17z";
+}
+
+.tree-view * .scroll-bar:horizontal > .increment-button > .increment-arrow {
+    -fx-shape: "M7.626,12.876L4.251,8.751H7.14L11,12.876L7.14,17H4.251L7.626,12.876z";
+}
+
+.tree-view * .scroll-bar:vertical > .decrement-button > .decrement-arrow {
+    -fx-shape: "M4,17v-2.889l4.124-3.86l4.125,3.86V17l-4.125-3.375L4,17z";
+}
+
+.tree-view * .scroll-bar:vertical > .increment-button > .increment-arrow {
+    -fx-shape: "M8.124,13.625l4.125-3.375v2.889l-4.125,3.86L4,13.139V10.25L8.124,13.625z";
+}
+
+/*ListView */
+
+/*.list-view * .list-cell{
+	-fx-background-color: white;
+}*/
+
+.list-view * .list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: #00849C;
+    -fx-text-fill: white;
+}
+
+.list-view * .list-cell:even { /* <=== changed to even */
+    -fx-background-color: white;
+}
+
+.list-view * .list-cell:filled:hover {
+    -fx-background-color: #0093ff;
+    -fx-text-fill: white;
+}
+
+/*SplitPane */
+.split-pane:horizontal *.split-pane-divider{
+	-fx-padding: 0 1 0 0;
+    -fx-background-color: transparent, #F2F2F2;
+    -fx-background-insets: 0 -3 0 -3, 0;
+    -fx-border-color: null;
+}
+
+/*MenuBar */
+.menu-bar{
+	-fx-background-color: white;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    
+    -fx-border-color: transparent, #F2F2F2;
+    -fx-border-style: solid;
+    -fx-border-width: 0, 1, 1, 1;
+}
+
+.menu{
+	-fx-padding: 0pt 10pt 0pt 10pt;
+	-fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+}
+
+#menufirst{
+	-fx-background-color: #0174DF;
+}
+
+#menufirst > .label{
+	-fx-text-fill: white;
+}

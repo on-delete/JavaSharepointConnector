@@ -12,6 +12,8 @@ import service.util.UserCredentials;
 
 import com.github.sardine.Sardine;
 import com.github.sardine.SardineFactory;
+
+import common.Constants;
 import common.ErrorMessages;
 
 @Singleton
@@ -37,7 +39,13 @@ public class SharepointService {
 	}
 	
 	public List<SharepointModel> getSharepointFiles(){
-		return instance.getItems();
+		if(Constants.WITHOUT_LOGIN){
+			url = "http://test.de:8080/sharepoint/ISODokumentenablage";
+			return new SharepointServiceMockData().getSharepointItems();
+		}
+		else{
+			return instance.getItems();
+		}
 	}
 	
 	//TODO function to download the files from sharepoint needs to bew reworked!

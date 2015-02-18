@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import java.net.URL?>
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="257.0" prefWidth="513.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.login.LoginView">
 	<children>
@@ -18,23 +19,23 @@
 									<children>
 										<HBox prefHeight="100.0" prefWidth="200.0">
 											<children>
-												<TextField fx:id="usernameField" prefHeight="30.0" prefWidth="200.0" promptText="Domäne/Username" />
+												<TextField fx:id="usernameField" prefHeight="30.0" prefWidth="200.0" promptText="Domäne/Username" styleClass="textfield"/>
 											</children>
 										</HBox>
 										<HBox prefHeight="100.0" prefWidth="200.0">
 											<children>
-												<PasswordField fx:id="passwortField" prefHeight="30.0" prefWidth="200.0" promptText="Passwort" />
+												<PasswordField fx:id="passwortField" prefHeight="30.0" prefWidth="200.0" promptText="Passwort" styleClass="textfield"/>
 											</children>
 										</HBox>
 										<HBox prefHeight="100.0" prefWidth="200.0">
 											<children>
-												<TextField fx:id="addressField" prefHeight="30.0" prefWidth="200.0" promptText="Sharepointadresse" />
+												<TextField fx:id="addressField" prefHeight="30.0" prefWidth="200.0" promptText="Sharepointadresse" styleClass="textfield"/>
 											</children>
 										</HBox>
 										<HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
 											<children>
-												<Button fx:id="closeButton" mnemonicParsing="false" onAction="#close" prefHeight="30.0" prefWidth="80.0" text="Schließen" />
-												<Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="80.0" text="Anmelden" />
+												<Button fx:id="closeButton" mnemonicParsing="false" onAction="#close" prefHeight="30.0" prefWidth="100.0" text="Schließen"/>
+												<Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="100.0" text="Anmelden"/>
 											</children>
 											<VBox.margin>
 												<Insets />
@@ -73,4 +74,7 @@
 			</children>
 		</AnchorPane>
 	</children>
+	<stylesheets>
+		<URL value="@../../css/controlStyle.css"/>
+	</stylesheets>
 </AnchorPane>

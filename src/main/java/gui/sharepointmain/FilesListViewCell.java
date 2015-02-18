@@ -36,7 +36,7 @@ public class FilesListViewCell extends ListCell<ListViewItem> {
 
 	private Label createItemLabel() {
 		Label itemLabel = new Label(listViewItem.getName());
-		itemLabel.setFont(Font.font("Segoe UI Symbol", 12));
+		itemLabel.setFont(Font.font("Segoe UI", 12));
 		
 		return itemLabel;
 	}

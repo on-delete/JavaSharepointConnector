@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-	prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="gui.sharepointmain.SharepointMainView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.sharepointmain.SharepointMainView">
 	<children>
-		<Pane fx:id="menuPane" layoutY="-55.0" prefHeight="70.0"
-			prefWidth="800.0" style="-fx-background-color: #58D3F7;">
+		<VBox prefHeight="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<children>
-				<VBox prefHeight="70.0" prefWidth="800.0">
+				<VBox prefHeight="60.0" prefWidth="800.0">
 					<children>
-						<HBox fx:id="iconBox" fillHeight="false" prefHeight="55.0"
-							prefWidth="800.0" />
-						<HBox fx:id="triggerPane" alignment="CENTER" onMouseClicked="#triggerMenu"
-							prefHeight="15.0" prefWidth="800.0">
-							<children>
-								<ImageView fx:id="menuTriggerImage" fitHeight="11.0"
-									fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
-								</ImageView>
-							</children>
-						</HBox>
+						<MenuBar>
+							<menus>
+								<Menu fx:id="menufirst" mnemonicParsing="false" text="File">
+									<items>
+										<MenuItem mnemonicParsing="false" text="Close" />
+									</items>
+								</Menu>
+								<Menu mnemonicParsing="false" text="Edit">
+									<items>
+										<MenuItem mnemonicParsing="false" text="Delete" />
+									</items>
+								</Menu>
+								<Menu mnemonicParsing="false" text="Help">
+									<items>
+										<MenuItem mnemonicParsing="false" text="About" />
+									</items>
+								</Menu>
+							</menus>
+							<padding>
+								<Insets left="-2.0" />
+							</padding>
+						</MenuBar>
+						<HBox prefHeight="36.0" prefWidth="200.0" style="-fx-border-color: white; -fx-background-color: white;" />
 					</children>
 				</VBox>
-			</children>
-		</Pane>
-		<AnchorPane AnchorPane.bottomAnchor="0.0"
-			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-			AnchorPane.topAnchor="15.0">
-			<children>
-				<SplitPane fx:id="mainSplitPane" prefHeight="585.0"
-					prefWidth="800.0">
+				<SplitPane fx:id="mainSplitPane" prefHeight="550.0" prefWidth="800.0" style="-fx-border-color: white; -fx-background-color: white;">
 					<items>
-						<TreeView fx:id="structureTree" maxWidth="300.0"
-							minWidth="200.0" />
+						<TreeView fx:id="structureTree" maxWidth="300.0" minWidth="200.0"/>
 						<ListView fx:id="filesListView" />
 					</items>
 				</SplitPane>
 			</children>
-		</AnchorPane>
+		</VBox>
 	</children>
+	<stylesheets>
+		<URL value="@../../css/controlStyle.css" />
+	</stylesheets>
 </AnchorPane>

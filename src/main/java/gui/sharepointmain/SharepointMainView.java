@@ -38,18 +38,6 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
     private SharepointMainViewModel viewModel;
 	
 	@FXML
-	Pane menuPane;
-	
-	@FXML 
-	HBox iconBox;
-	
-	@FXML
-	Pane triggerPane;
-	
-	@FXML
-	ImageView menuTriggerImage;
-	
-	@FXML
 	SplitPane mainSplitPane;
 	
 	@FXML
@@ -61,8 +49,6 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		mainSplitPane.setDividerPositions(0.3f);
-		
-		menuTriggerImage.setImage(menuDown);
 		
 		viewModel.initTreeViewItems();
 		structureTree.setRoot(viewModel.getRootNode());
@@ -85,49 +71,4 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 		filesListView.setPlaceholder(new Label("Dieser Ordner ist leer."));
 		
 	}
-	
-	@FXML
-	public void triggerMenu(MouseEvent event){
-		
-		if(isMenuOpen){
-			hideMenu.play();
-		}
-		else{
-			menuPane.toFront();
-			showMenu.play();
-		}
-	}
-	
-	final Animation showMenu = new Transition() {
-        { setCycleDuration(Duration.millis(250)); 
-          onFinishedProperty().set(new EventHandler<ActionEvent>() {
-              @Override 
-              public void handle(ActionEvent actionEvent) {
-            	  isMenuOpen = true;
-            	  menuTriggerImage.setImage(menuUp);
-              }
-           });
-        }
-        protected void interpolate(double frac) {
-          final double curWidth = (menuPane.getPrefHeight() - triggerPane.getPrefHeight()) * frac;
-          menuPane.setLayoutY(-(menuPane.getPrefHeight() - triggerPane.getPrefHeight()) + curWidth);
-        }
-     };
-     
-     final Animation hideMenu = new Transition() {
-         { setCycleDuration(Duration.millis(250)); 
-         	onFinishedProperty().set(new EventHandler<ActionEvent>() {
-         		@Override 
-         		public void handle(ActionEvent actionEvent) {
-           	  		isMenuOpen = false;
-           	  		menuPane.toBack();
-           	  		menuTriggerImage.setImage(menuDown);
-            	}
-         	});
-         }
-         protected void interpolate(double frac) {
-           final double curWidth = (menuPane.getPrefHeight() - triggerPane.getPrefHeight()) * frac;
-           menuPane.setLayoutY(0 - curWidth);
-         }
-      };
 }
