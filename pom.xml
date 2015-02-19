@@ -47,7 +47,7 @@
 		<!-- Umsetzung der GUI als Mvvm Lösung -->
 		<dependency>
 			<groupId>de.saxsys</groupId>
-			<artifactId>mvvmFX</artifactId>
+			<artifactId>mvvmfx</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<!-- <dependency> <groupId>javax.enterprise</groupId> <artifactId>cdi-api</artifactId> 

@@ -9,10 +9,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
@@ -27,6 +28,7 @@ public class SharepointMainViewModel implements ViewModel{
 
 	private ObjectProperty<TreeItem<TreeViewListItem>> selectedTreeItem = new SimpleObjectProperty<TreeItem<TreeViewListItem>>();
 	private ObservableList<ListViewItem> subItems = FXCollections.observableArrayList();
+	private IntegerProperty viewNumber = new SimpleIntegerProperty(2);
 	
 	private TreeItem<TreeViewListItem> rootNode;
 	private List<SharepointModel> sharepointList;
@@ -40,6 +42,10 @@ public class SharepointMainViewModel implements ViewModel{
 	
 	public ObservableList<ListViewItem> subItemsProperty() {
 		return subItems;
+	}
+	
+	public IntegerProperty viewNumberProperty() {
+		return viewNumber;
 	}
 
 	private SharepointService service;
@@ -66,25 +72,19 @@ public class SharepointMainViewModel implements ViewModel{
 
 		setSubListItems(sharepointList);
 		
-		selectedTreeItem.addListener(new ChangeListener<TreeItem<TreeViewListItem>>(){
-			
-			@Override
-			public void changed(
-					ObservableValue<? extends TreeItem<TreeViewListItem>> observable,
-					TreeItem<TreeViewListItem> oldValue,
-					TreeItem<TreeViewListItem> newValue) {
-				if(newValue==null){
-					//In this case, the parent tree item is closed, so that in the first change the new tree item is null, this should be catched here.
-					//In the next change the value is set to the closed parent tree item.
-				}
-				else if(newValue.getValue().equals(treeViewListModel.getRootItem())){
-					setSubListItems(sharepointList);
-				}
-				else{
-					addSubItemsListView(newValue.getValue().getName(), sharepointList);
-				}
+		selectedTreeItem.addListener((ChangeListener<TreeItem<TreeViewListItem>>) (observable, oldValue, newValue) -> {
+			if (newValue == null) {
+						// In this case, the parent tree item is closed, so that
+						// in the first change the new tree item is null, this
+						// should be catched here.
+						// In the next change the value is set to the closed
+						// parent tree item.
+			} else if (newValue.getValue().equals(treeViewListModel.getRootItem())) {
+				setSubListItems(sharepointList);
+			} else {
+				addSubItemsListView(newValue.getValue().getName(),sharepointList);
 			}
-	      });
+		});
 	}
 	
 	private void addChildItemsTreeView(List<SharepointModel> subList, TreeViewListItem parentItem){
@@ -122,18 +122,15 @@ public class SharepointMainViewModel implements ViewModel{
 		Collections.sort(subItems, comparatorByIsFolder);
 	}
 	
-	private Comparator<? super ListViewItem> comparatorByIsFolder = new Comparator<ListViewItem>() {
-        @Override
-        public int compare(ListViewItem o1, ListViewItem o2) {
-        	boolean v1 = o1.isFolder();
-            boolean v2 = o2.isFolder();
-            if( v1 && ! v2 ) {
-                return -1;
-            }
-            if( ! v1 && v2 ) {
-                return +1;
-            }
-            return 0;
-        }
-    };
+	private Comparator<? super ListViewItem> comparatorByIsFolder = (o1, o2) -> {
+		boolean v1 = o1.isFolder();
+	    boolean v2 = o2.isFolder();
+	    if( v1 && ! v2 ) {
+	        return -1;
+	    }
+	    if( ! v1 && v2 ) {
+	        return +1;
+	    }
+	    return 0;
+	};
 }

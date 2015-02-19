@@ -14,7 +14,6 @@ import com.github.sardine.Sardine;
 import com.github.sardine.SardineFactory;
 
 import common.Constants;
-import common.ErrorMessages;
 
 @Singleton
 public class SharepointService {
@@ -74,20 +73,20 @@ public class SharepointService {
 	public int testSharepointConnection() {
 		try{
 			instance.testConnection();
-			return ErrorMessages.SUCCESS;
+			return Constants.SUCCESS;
 		}
 		catch(IOException e){
 			if(e.toString().contains("404 NOT FOUND")){
 				System.out.println("Sharepoint Location not found");
-				return ErrorMessages.NOT_FOUND;
+				return Constants.NOT_FOUND;
 			}
 			else if(e.toString().contains("401")){
 				System.out.println("Username or Password wrong");
-				return ErrorMessages.NOT_AUTHORIZED;
+				return Constants.NOT_AUTHORIZED;
 			}
 			else{
 				System.out.println("Internal Error");
-				return ErrorMessages.INTERNAL_ERROR;
+				return Constants.INTERNAL_ERROR;
 			}
 		}
 	}

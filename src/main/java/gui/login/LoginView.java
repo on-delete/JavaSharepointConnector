@@ -7,7 +7,6 @@ import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,7 +19,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import common.ErrorMessages;
+import common.Constants;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 
@@ -64,23 +63,23 @@ public class LoginView implements FxmlView<LoginViewModel>, Initializable {
 		progressBar.setProgress(0);
 		errorMessage.bind(viewModel.errorMessageProperty());
 		
-		errorMessage.addListener(new ChangeListener<Number>(){
-	        @Override public void changed(ObservableValue<? extends Number> o,Number oldVal, Number newVal){
-	             if((Integer)newVal == ErrorMessages.INTERNAL_ERROR){
-	            	 showErrorMessage(ErrorMessages.INTERNAL_ERROR_TEXT);
-	             }
-	             else if((Integer)newVal == ErrorMessages.NOT_AUTHORIZED){
-	            	 showErrorMessage(ErrorMessages.NOT_AUTHORIZED_TEXT);
-	             }
-	             else if((Integer)newVal == ErrorMessages.NOT_FOUND){
-	            	 showErrorMessage(ErrorMessages.NOT_FOUND_TEXT);
-	             }
-	        }
-	      });
+		errorMessage.addListener((ChangeListener<Number>) (o, oldVal, newVal) -> {
+		     if((Integer)newVal == Constants.INTERNAL_ERROR){
+		    	 showErrorMessage(Constants.INTERNAL_ERROR_TEXT);
+		     }
+		     else if((Integer)newVal == Constants.NOT_AUTHORIZED){
+		    	 showErrorMessage(Constants.NOT_AUTHORIZED_TEXT);
+		     }
+		     else if((Integer)newVal == Constants.NOT_FOUND){
+		    	 showErrorMessage(Constants.NOT_FOUND_TEXT);
+		     }
+		});
 	}
 
 	@FXML 
 	public void login(ActionEvent event) {
+		viewModel.initSharepointService();
+		viewModel.initLoginService();
 		progressBar.progressProperty().bind(viewModel.loginWorkerProperty().get().progressProperty());
 		viewModel.login();
 
@@ -93,17 +92,14 @@ public class LoginView implements FxmlView<LoginViewModel>, Initializable {
 	}
 
 	private void showErrorMessage(String errorMessage){
-		Platform.runLater(new Runnable(){
-			@Override
-			public void run() {
-				progressBar.progressProperty().unbind();
-				progressBar.setProgress(0);
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Fehler");
-				alert.setHeaderText("Es ist ein Fehler aufgetreten!");
-				alert.setContentText(errorMessage);
-				alert.show();
-			}
+		Platform.runLater(() -> {
+			progressBar.progressProperty().unbind();
+			progressBar.setProgress(0);
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Fehler");
+			alert.setHeaderText("Es ist ein Fehler aufgetreten!");
+			alert.setContentText(errorMessage);
+			alert.show();
 		});
 	}
 }
