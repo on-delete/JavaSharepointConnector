@@ -1,6 +1,5 @@
 package gui.sharepointmain;
 
-import common.Constants;
 import gui.model.ListViewItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -8,6 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+
+import common.Constants;
 
 public class FilesListViewCell extends ListCell<ListViewItem> {
 

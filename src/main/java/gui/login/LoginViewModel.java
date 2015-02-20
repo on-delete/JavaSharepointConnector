@@ -9,10 +9,11 @@ import javafx.beans.property.StringProperty;
 
 import javax.inject.Inject;
 
-import common.Constants;
-
 import service.SharepointService;
 import service.util.UserCredentials;
+
+import common.Constants;
+
 import de.saxsys.mvvmfx.ViewModel;
 
 public class LoginViewModel implements ViewModel{
@@ -32,6 +33,10 @@ public class LoginViewModel implements ViewModel{
 	@Inject
 	public LoginViewModel(SharepointService service){
 		this.service = service;
+	}
+	
+	public UserCredentials getUserCredentials(){
+		return userCredentials;
 	}
 	
 	public StringProperty usernameProperty() {
@@ -68,12 +73,11 @@ public class LoginViewModel implements ViewModel{
 	}
 	
 	public void initLoginService(){
-		loginService = new LoginService(service, this);
-		loginWorker.set(loginService);
+		loginWorker.set(new LoginService(service, this));
 	}
 
 	public void login() {
-		loginService.start();
+		loginWorker.get().start();
 	}
 	
 	public void loginSuccess(){

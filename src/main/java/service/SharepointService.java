@@ -12,7 +12,6 @@ import service.util.UserCredentials;
 
 import com.github.sardine.Sardine;
 import com.github.sardine.SardineFactory;
-
 import common.Constants;
 
 @Singleton
@@ -97,5 +96,9 @@ public class SharepointService {
 
 	public UserCredentials getUserCredentials() {
 		return userCredentials;
+	}
+	
+	public Connector getInstance(){
+		return instance;
 	}
 }

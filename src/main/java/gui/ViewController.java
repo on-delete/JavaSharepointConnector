@@ -1,6 +1,5 @@
 package gui;
 
-import common.Constants;
 import gui.login.LoginView;
 import gui.login.LoginViewModel;
 import gui.sharepointmain.SharepointMainView;
@@ -9,6 +8,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import common.Constants;
+
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
 
