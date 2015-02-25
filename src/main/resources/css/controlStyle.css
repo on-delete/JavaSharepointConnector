@@ -1,6 +1,6 @@
 /*Buttons */
 
-.button {
+.button_metro {
     -fx-padding: 5 10 5 10;   
     -fx-border-style: null; 
     -fx-background-radius: 0;
@@ -12,17 +12,17 @@
     -fx-text-fill: black;
 }
  
-.button:hover{
+.button_metro:hover{
     -fx-background-color: #d8d8d8;
 }
  
-.button:pressed, .button:default:hover:pressed
+.button_metro:pressed, .button_metro:default:hover:pressed
 {
   -fx-background-color: black;
   -fx-text-fill: white;
 }
  
-.button:focused
+.button_metro:focused
 {
     -fx-border-color: black;
     -fx-border-width: 1;
@@ -30,20 +30,20 @@
     -fx-background-insets: 0 0 0 0, 0, 1, 2;   
 }
  
-.button:disabled, .button:default:disabled
+.button_metro:disabled, .button_metro:default:disabled
 {
     -fx-opacity: 0.4;
     -fx-background-color: #cccccc;
     -fx-text-fill: #212121;
 }
  
-.button:default
+.button_metro:default
 {
     -fx-background-color: #008287;
     -fx-text-fill: #ffffff;
 }
  
-.button:default:hover{
+.button_metro:default:hover{
     -fx-background-color: #219297;
 }
 
@@ -165,23 +165,23 @@
 
 /*ListView */
 
-/*.list-view * .list-cell{
+.list-view * .list-cell:empty{
 	-fx-background-color: white;
-}*/
+}
 
-.list-view * .list-cell:filled:selected:focused, .list-cell:filled:selected {
+/*.list-view * .list-cell:filled:selected:focused, .list-cell:filled:selected {
     -fx-background-color: #00849C;
     -fx-text-fill: white;
 }
 
-.list-view * .list-cell:even { /* <=== changed to even */
+.list-view * .list-cell:even {  <=== changed to even 
     -fx-background-color: white;
 }
 
 .list-view * .list-cell:filled:hover {
-    -fx-background-color: #0093ff;
+    -fx-background-color: #00aba9;
     -fx-text-fill: white;
-}
+}*/
 
 /*SplitPane */
 .split-pane:horizontal *.split-pane-divider{
@@ -194,8 +194,7 @@
 /*MenuBar */
 .menu-bar{
 	-fx-background-color: white;
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    -fx-padding: 0, 0, 0, -2pt;
     
     -fx-border-color: transparent, #F2F2F2;
     -fx-border-style: solid;
@@ -214,4 +213,28 @@
 
 #menufirst > .label{
 	-fx-text-fill: white;
+}
+
+.imageView_left{
+	-fx-image: url(../images/left_round_bw.png);
+}
+
+.imageView_left_disabled{
+	-fx-image: url(../images/left_round_gray.png);
+}
+
+.imageView_left:hover{
+	-fx-image: url(../images/left_round_blue.png);
+}
+
+.imageView_right{
+	-fx-image: url(../images/right_round_bw.png);
+}
+
+.imageView_right_disabled{
+	-fx-image: url(../images/right_round_gray.png);
+}
+
+.imageView_right:hover{
+	-fx-image: url(../images/right_round_blue.png);
 }

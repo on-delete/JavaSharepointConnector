@@ -28,7 +28,6 @@ public class LoginViewModel implements ViewModel{
 	
 	private UserCredentials userCredentials;
 	private SharepointService service;
-	private LoginService loginService;
 	
 	@Inject
 	public LoginViewModel(SharepointService service){

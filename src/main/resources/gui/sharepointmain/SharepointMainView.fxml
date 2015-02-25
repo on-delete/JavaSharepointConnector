@@ -4,6 +4,7 @@
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.sharepointmain.SharepointMainView">
@@ -30,17 +31,29 @@
 									</items>
 								</Menu>
 							</menus>
-							<padding>
-								<Insets left="-2.0" />
-							</padding>
 						</MenuBar>
-						<HBox prefHeight="36.0" prefWidth="200.0" style="-fx-border-color: white; -fx-background-color: white;" />
+						<HBox prefHeight="36.0" prefWidth="200.0" spacing="8.0" style="-fx-border-color: white; -fx-background-color: white;">
+							<children>
+								<ImageView fx:id="leftArrowIcon" disable="true" styleClass="imageView_left_disabled">
+									<HBox.margin>
+										<Insets />
+									</HBox.margin>
+								</ImageView>
+								<ImageView fx:id="rightArrowIcon" disable="true" styleClass="imageView_right_disabled" />
+							</children>
+							<VBox.margin>
+								<Insets />
+							</VBox.margin>
+							<padding>
+								<Insets left="5.0" top="4.0" />
+							</padding>
+						</HBox>
 					</children>
 				</VBox>
 				<SplitPane fx:id="mainSplitPane" prefHeight="550.0" prefWidth="800.0" style="-fx-border-color: white; -fx-background-color: white;">
 					<items>
-						<TreeView fx:id="structureTree" maxWidth="300.0" minWidth="200.0"/>
-						<ListView fx:id="filesListView" />
+						<TreeView fx:id="navigation" maxWidth="300.0" minWidth="200.0" />
+						<ListView fx:id="content" />
 					</items>
 				</SplitPane>
 			</children>

@@ -1,25 +1,29 @@
 package gui.model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
-public class TreeViewListItem {
+public class NavigationItem {
 
 	private StringProperty name = new SimpleStringProperty();
 	
-	private ObservableList<TreeViewListItem> subItems = FXCollections.observableArrayList();
+	private ObservableList<NavigationItem> subItems = FXCollections.observableArrayList();
 	
-	private TreeViewListItem parent;
+	private BooleanProperty isFolder = new SimpleBooleanProperty(false);
 	
-	public TreeViewListItem(){
-		subItems.addListener((ListChangeListener<TreeViewListItem>) change -> {
+	private NavigationItem parent;
+	
+	public NavigationItem(){
+		subItems.addListener((ListChangeListener<NavigationItem>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
                     change.getAddedSubList().forEach(item -> {
-                        item.setParent(TreeViewListItem.this);
+                        item.setParent(NavigationItem.this);
                     });
                 }
 
@@ -32,12 +36,12 @@ public class TreeViewListItem {
         });
 	}
 	
-	public TreeViewListItem(String name){
+	public NavigationItem(String name){
         this();
         this.setName(name);
     }
 	
-	protected void setParent(TreeViewListItem parentItem){
+	protected void setParent(NavigationItem parentItem){
         this.parent = parentItem;
     }
 	
@@ -49,7 +53,15 @@ public class TreeViewListItem {
         return this.name.get();
     }
 
-	public ObservableList<TreeViewListItem> getSubItems(){
+	public boolean isFolder() {
+		return isFolder.get();
+	}
+
+	public void setIsFolder(boolean isFolder) {
+		this.isFolder.set(isFolder);
+	}
+
+	public ObservableList<NavigationItem> getSubItems(){
         return subItems;
     }
 	
