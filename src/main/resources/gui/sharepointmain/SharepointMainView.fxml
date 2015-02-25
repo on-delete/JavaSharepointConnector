@@ -9,11 +9,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.sharepointmain.SharepointMainView">
 	<children>
-		<VBox prefHeight="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<VBox prefHeight="600.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<children>
-				<VBox prefHeight="60.0" prefWidth="800.0">
+				<VBox prefHeight="60.0" prefWidth="800.0" style="-fx-border-width: 0;">
 					<children>
-						<MenuBar>
+						<MenuBar prefHeight="22.0">
 							<menus>
 								<Menu fx:id="menufirst" mnemonicParsing="false" text="File">
 									<items>
@@ -32,7 +32,7 @@
 								</Menu>
 							</menus>
 						</MenuBar>
-						<HBox prefHeight="36.0" prefWidth="200.0" spacing="8.0" style="-fx-border-color: white; -fx-background-color: white;">
+						<HBox prefHeight="36.0" spacing="8.0" style="-fx-background-color: white;">
 							<children>
 								<ImageView fx:id="leftArrowIcon" disable="true" styleClass="imageView_left_disabled">
 									<HBox.margin>
@@ -45,12 +45,12 @@
 								<Insets />
 							</VBox.margin>
 							<padding>
-								<Insets left="5.0" top="4.0" />
+								<Insets left="5.0" top="5.0" />
 							</padding>
 						</HBox>
 					</children>
 				</VBox>
-				<SplitPane fx:id="mainSplitPane" prefHeight="550.0" prefWidth="800.0" style="-fx-border-color: white; -fx-background-color: white;">
+				<SplitPane fx:id="mainSplitPane" prefHeight="550.0" prefWidth="800.0" style="-fx-border-width: 0; -fx-background-color: white;">
 					<items>
 						<TreeView fx:id="navigation" maxWidth="300.0" minWidth="200.0" />
 						<ListView fx:id="content" />

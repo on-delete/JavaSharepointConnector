@@ -46,7 +46,7 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 		viewModel.selectedNaviagtionItemProperty().bind(navigation.getSelectionModel().selectedItemProperty());
 		
 		content.setItems(viewModel.contentItemListProperty());
-		content.setCellFactory(param -> new ContentItemCell());
+		content.setCellFactory(param -> new ContentItemCell(viewModel));
 		content.setPlaceholder(new Label("Dieser Ordner ist leer."));
 	}
 }

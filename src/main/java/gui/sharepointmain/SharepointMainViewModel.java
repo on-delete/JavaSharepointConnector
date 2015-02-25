@@ -82,6 +82,10 @@ public class SharepointMainViewModel implements ViewModel{
     	
         return rootNode;
     }
+    
+    public void handleContentDoubleClick(String text) {
+		addItemsContent(text, sharepointItemList);
+	}
 	
 	private void addChildItemsNavigation(List<SharepointModel> subList, NavigationItem parentItem){
 		for(SharepointModel ressource : subList){

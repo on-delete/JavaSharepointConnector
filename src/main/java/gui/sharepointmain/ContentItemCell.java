@@ -14,6 +14,13 @@ import common.Constants;
 public class ContentItemCell extends ListCell<ContentItem> {
 
 	private ContentItem contentItem;
+	private SharepointMainViewModel viewModel;
+	
+	private Label itemLabel;
+
+	public ContentItemCell(SharepointMainViewModel viewModel) {
+		this.viewModel = viewModel;
+	}
 
 	@Override
 	public void updateItem(ContentItem contentItem, boolean empty){
@@ -21,17 +28,21 @@ public class ContentItemCell extends ListCell<ContentItem> {
 		super.updateItem(contentItem,empty);
 	    if(empty){
 	    	setGraphic(null);
+	    	setOnMouseClicked(null);
 	    }
 	    else{
 	    	setGraphic(createContentItemCellContent());
-	    	setOnMouseClicked(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent event) {
-					if(event.getClickCount()>1){
-						System.out.println("Doppelklick auf " + event.getTarget());
+	    	if(contentItem.isFolder()){
+		    	setOnMouseClicked(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent event) {
+						if(event.getClickCount()>1){
+							ContentItemCell eventSource = (ContentItemCell)event.getSource();
+							viewModel.handleContentDoubleClick(eventSource.getItemLabel().getText());
+						}
 					}
-				}
-			});
+				});
+	    	}
 	    }
 	}	
 	
@@ -45,7 +56,7 @@ public class ContentItemCell extends ListCell<ContentItem> {
 	}
 
 	private Label createContentItemLabel() {
-		Label itemLabel = new Label(contentItem.getName());
+		itemLabel = new Label(contentItem.getName());
 		itemLabel.setFont(Font.font("Segoe UI", 12));
 		
 		return itemLabel;
@@ -65,5 +76,9 @@ public class ContentItemCell extends ListCell<ContentItem> {
 				return new ImageView(new Image("images/icons/blank.png"));
 			}
 		}
+	}
+	
+	public Label getItemLabel(){
+		return this.itemLabel;
 	}
 }

@@ -198,7 +198,7 @@
     
     -fx-border-color: transparent, #F2F2F2;
     -fx-border-style: solid;
-    -fx-border-width: 0, 1, 1, 1;
+    -fx-border-width: 0;
 }
 
 .menu{
