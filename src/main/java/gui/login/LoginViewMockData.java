@@ -2,7 +2,7 @@ package gui.login;
 
 public class LoginViewMockData {
 
-	public static String username = "andre.krause";
+	public static String username = "andre.kraus";
 	
 	public static String password = "Abitur200924";
 	
