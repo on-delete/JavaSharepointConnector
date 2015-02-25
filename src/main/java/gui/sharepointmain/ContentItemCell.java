@@ -1,13 +1,14 @@
 package gui.sharepointmain;
 
 import gui.model.ContentItem;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
-
 import common.Constants;
 
 public class ContentItemCell extends ListCell<ContentItem> {
@@ -23,6 +24,14 @@ public class ContentItemCell extends ListCell<ContentItem> {
 	    }
 	    else{
 	    	setGraphic(createContentItemCellContent());
+	    	setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					if(event.getClickCount()>1){
+						System.out.println("Doppelklick auf " + event.getTarget());
+					}
+				}
+			});
 	    }
 	}	
 	
