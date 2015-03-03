@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import service.connector.Connector;
 import service.model.SharepointModel;
 import service.util.URIEncoder;
@@ -12,6 +15,7 @@ import service.util.UserCredentials;
 
 import com.github.sardine.Sardine;
 import com.github.sardine.SardineFactory;
+
 import common.Constants;
 
 @Singleton
@@ -22,6 +26,8 @@ public class SharepointService {
 	
 	private String url;
 	private UserCredentials userCredentials;
+	
+	private final static Logger LOGGER = /*Logger.getLogger(SharepointService.class);*/ LoggerFactory.getLogger(SharepointService.class);
 	
 	public SharepointService(){
 
@@ -76,15 +82,15 @@ public class SharepointService {
 		}
 		catch(IOException e){
 			if(e.toString().contains("404 NOT FOUND")){
-				System.out.println("Sharepoint Location not found");
+				LOGGER.error("Sharepoint Location not found");
 				return Constants.NOT_FOUND;
 			}
 			else if(e.toString().contains("401")){
-				System.out.println("Username or Password wrong");
+				LOGGER.error("Username or Password wrong");
 				return Constants.NOT_AUTHORIZED;
 			}
 			else{
-				System.out.println("Internal Error");
+				LOGGER.error("Internal Error");
 				return Constants.INTERNAL_ERROR;
 			}
 		}

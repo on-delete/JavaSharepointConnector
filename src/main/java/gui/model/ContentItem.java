@@ -5,12 +5,12 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class ListViewItem {
+public class ContentItem {
 
 	private StringProperty name = new SimpleStringProperty();
 	private BooleanProperty isFolder = new SimpleBooleanProperty();
 	
-	public ListViewItem(String name, boolean isFolder) {
+	public ContentItem(String name, boolean isFolder) {
 		super();
 		this.setName(name);
 		this.setIsFolder(isFolder);

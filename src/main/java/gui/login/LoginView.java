@@ -84,7 +84,6 @@ public class LoginView implements FxmlView<LoginViewModel>, Initializable {
 		viewModel.initLoginService();
 		progressBar.progressProperty().bind(viewModel.loginWorkerProperty().get().progressProperty());
 		viewModel.login();
-
 	}
 	
 	@FXML
