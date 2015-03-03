@@ -34,7 +34,7 @@ public class SharepointMainViewModel implements ViewModel{
 	private List<SharepointModel> sharepointItemList;
 
 	@Inject
-	NaviagtionItemModel navigationItemModel;
+	private NaviagtionItemModel navigationItemModel;
 
 	public ObjectProperty<TreeItem<NavigationItem>> selectedNaviagtionItemProperty() {
 		return selectedNaviagtionItem;

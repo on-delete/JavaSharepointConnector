@@ -207,6 +207,42 @@
     -fx-font-size: 11pt;
 }
 
+/*.menu-item{
+	-fx-padding: 0pt 10pt 0pt 10pt;
+	-fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-border-width: 0;
+}*/
+
+.menu-item {
+    -fx-background-color: transparent;
+    /*-fx-padding: 0.666666em 1.333332em 0.666666em 1.333332em;*/   /*8 16 8 16 */
+    -fx-padding: 0.2em 0.8em 0.2em 0.8em;
+}
+
+.menu-item .label {
+    -fx-padding: 0em 1.333332em 0em 0em;
+    -fx-text-fill: #212121;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+}
+
+.menu-item:focused {
+     -fx-background: -fx-accent;
+     -fx-background-color: #dedede;
+}
+
+.menu-item:pressed
+{
+    -fx-background-color: #212121;
+    -fx-text-fill: white;
+}
+
+.menu-item:pressed .label
+{
+    -fx-text-fill: white;
+}
+
 #menufirst{
 	-fx-background-color: #0174DF;
 }

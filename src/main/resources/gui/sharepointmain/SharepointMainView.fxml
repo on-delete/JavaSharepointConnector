@@ -7,7 +7,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.sharepointmain.SharepointMainView">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.sharepointmain.SharepointMainView">
 	<children>
 		<VBox prefHeight="600.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<children>
@@ -15,31 +15,39 @@
 					<children>
 						<MenuBar prefHeight="22.0">
 							<menus>
-								<Menu fx:id="menufirst" mnemonicParsing="false" text="File">
+								<Menu fx:id="menufirst" mnemonicParsing="false" text="Datei">
 									<items>
-										<MenuItem mnemonicParsing="false" text="Close" />
+										<MenuItem mnemonicParsing="false" text="  Abmelden">
+											
+										</MenuItem>
+										<MenuItem onAction="#closeSharepointMainView" mnemonicParsing="false" text="  Schließen">
+											<graphic>
+												<ImageView>
+													 <image>
+														<Image url="@../../images/close-icon.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</MenuItem>
 									</items>
 								</Menu>
-								<Menu mnemonicParsing="false" text="Edit">
-									<items>
-										<MenuItem mnemonicParsing="false" text="Delete" />
-									</items>
+								<Menu mnemonicParsing="false" text="Bearbeiten">
 								</Menu>
-								<Menu mnemonicParsing="false" text="Help">
+								<Menu mnemonicParsing="false" text="Hilfe">
 									<items>
-										<MenuItem mnemonicParsing="false" text="About" />
+										<MenuItem mnemonicParsing="false" text="Über" />
 									</items>
 								</Menu>
 							</menus>
 						</MenuBar>
 						<HBox prefHeight="36.0" spacing="8.0" style="-fx-background-color: white;">
 							<children>
-								<ImageView fx:id="leftArrowIcon" disable="true" styleClass="imageView_left_disabled">
+								<ImageView fx:id="leftArrowIcon" styleClass="imageView_left_disabled">
 									<HBox.margin>
 										<Insets />
 									</HBox.margin>
 								</ImageView>
-								<ImageView fx:id="rightArrowIcon" disable="true" styleClass="imageView_right_disabled" />
+								<ImageView fx:id="rightArrowIcon" styleClass="imageView_right_disabled" />
 							</children>
 							<VBox.margin>
 								<Insets />
