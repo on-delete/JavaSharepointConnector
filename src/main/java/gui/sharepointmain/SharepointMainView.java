@@ -6,11 +6,6 @@ import gui.model.NavigationItem;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.fxmisc.undo.UndoManager;
-import org.fxmisc.undo.UndoManagerFactory;
-import org.reactfx.Change;
-import org.reactfx.EventStream;
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -27,11 +22,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
-import static org.reactfx.EventStreams.*;
 
 public class SharepointMainView implements FxmlView<SharepointMainViewModel>, Initializable {
-	
-	private UndoManager undoManager;
 	
 	@InjectViewModel
     private SharepointMainViewModel viewModel;
@@ -62,21 +54,17 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 		navigation.getRoot().setExpanded(true);
 		navigation.setCellFactory(param -> new NavigationItemCell());
 		viewModel.selectedNaviagtionItemProperty().bind(navigation.getSelectionModel().selectedItemProperty());
+		viewModel.navigationItemHistoryProperty().addListener((ChangeListener<TreeItem<NavigationItem>>) (observable, oldValue, newValue) -> {
+			navigation.getSelectionModel().select(newValue);
+		});
+		
 		
 		content.setItems(viewModel.contentItemListProperty());
 		content.setCellFactory(param -> new ContentItemCell(viewModel));
 		content.setPlaceholder(new Label("Dieser Ordner ist leer."));
-		
-		EventStream<Change<TreeItem<NavigationItem>>> selectedItemChanges =
-		        changesOf(navigation.getSelectionModel().selectedItemProperty());
 
-		undoManager = UndoManagerFactory.unlimitedHistoryUndoManager(
-		        selectedItemChanges, // stream of changes to observe
-				c -> navigation.getSelectionModel().select(c.getNewValue()),  // function to redo a change
-				c -> navigation.getSelectionModel().select(c.getOldValue())); // function to undo a change
-		
-		leftArrowIcon.disableProperty().bind(Bindings.not(undoManager.undoAvailableProperty()));
-		leftArrowIcon.setOnMouseClicked(evt -> undoManager.undo());
+		leftArrowIcon.disableProperty().bind(Bindings.not(viewModel.undoAvailableProperty()));
+		leftArrowIcon.setOnMouseClicked(evt -> viewModel.undo());
 		leftArrowIcon.disableProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable,
@@ -91,8 +79,8 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 				}
 			}
 		});
-		rightArrowIcon.disableProperty().bind(Bindings.not(undoManager.redoAvailableProperty()));
-		rightArrowIcon.setOnMouseClicked(evt -> undoManager.redo());
+		rightArrowIcon.disableProperty().bind(Bindings.not(viewModel.redoAvailableProperty()));
+		rightArrowIcon.setOnMouseClicked(evt -> viewModel.redo());
 		rightArrowIcon.disableProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable,

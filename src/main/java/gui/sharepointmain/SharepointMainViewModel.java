@@ -1,5 +1,6 @@
 package gui.sharepointmain;
 
+import static org.reactfx.EventStreams.changesOf;
 import gui.model.ContentItem;
 import gui.model.NavigationItem;
 import gui.model.NaviagtionItemModel;
@@ -14,11 +15,17 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
 import javax.inject.Inject;
+
+import org.fxmisc.undo.UndoManager;
+import org.fxmisc.undo.UndoManagerFactory;
+import org.reactfx.Change;
+import org.reactfx.EventStream;
 
 import service.SharepointService;
 import service.model.SharepointModel;
@@ -27,11 +34,14 @@ import de.saxsys.mvvmfx.ViewModel;
 public class SharepointMainViewModel implements ViewModel{
 
 	private ObjectProperty<TreeItem<NavigationItem>> selectedNaviagtionItem = new SimpleObjectProperty<TreeItem<NavigationItem>>();
+	private ObjectProperty<TreeItem<NavigationItem>> navigationItemHistory = new SimpleObjectProperty<TreeItem<NavigationItem>>();
 	private ObservableList<ContentItem> contentItemList = FXCollections.observableArrayList();
 	private IntegerProperty viewNumber = new SimpleIntegerProperty(2);
 	
 	private TreeItem<NavigationItem> rootNode;
 	private List<SharepointModel> sharepointItemList;
+	
+	private UndoManager undoManager;
 
 	@Inject
 	private NaviagtionItemModel navigationItemModel;
@@ -48,14 +58,37 @@ public class SharepointMainViewModel implements ViewModel{
 		return viewNumber;
 	}
 	
+	public ObjectProperty<TreeItem<NavigationItem>> navigationItemHistoryProperty(){
+		return navigationItemHistory;
+	}
+	
+	public ObservableBooleanValue undoAvailableProperty(){
+		return undoManager.undoAvailableProperty();
+	}
+	
+	public ObservableBooleanValue redoAvailableProperty(){
+		return undoManager.redoAvailableProperty();
+	}
+	
 	private SharepointService service;
-
+	
 	@Inject
 	public SharepointMainViewModel(SharepointService service){
+		EventStream<Change<TreeItem<NavigationItem>>> selectedNavigationItemChanges =
+		        changesOf(selectedNaviagtionItem);
+		
+		undoManager = UndoManagerFactory.unlimitedHistoryUndoManager(
+				selectedNavigationItemChanges, // stream of changes to observe
+				c -> navigationItemHistory.set(c.getNewValue()),  // function to redo a change
+				c -> navigationItemHistory.set(c.getOldValue())); // function to undo a change
+		
 		this.service = service;
 		this.sharepointItemList = this.service.getSharepointFiles();
 		
 		selectedNaviagtionItem.addListener((ChangeListener<TreeItem<NavigationItem>>) (observable, oldValue, newValue) -> {
+			if (oldValue == null){
+				undoManager.forgetHistory();
+			}
 			if (newValue == null) {
 						// In this case, the parent tree item is closed, so that
 						// in the first change the new tree item is null, this
@@ -86,6 +119,14 @@ public class SharepointMainViewModel implements ViewModel{
     public void handleContentDoubleClick(String text) {
 		addItemsContent(text, sharepointItemList);
 	}
+    
+    public void undo(){
+    	undoManager.undo();
+    }
+    
+    public void redo(){
+    	undoManager.redo();
+    }
 	
 	private void addChildItemsNavigation(List<SharepointModel> subList, NavigationItem parentItem){
 		for(SharepointModel ressource : subList){
