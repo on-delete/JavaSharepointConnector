@@ -3,7 +3,7 @@ package gui.model;
 import javax.inject.Singleton;
 
 @Singleton
-public class NaviagtionItemModel {
+public class NavigationItemModel {
 
 	private NavigationItem rootItem;
 	

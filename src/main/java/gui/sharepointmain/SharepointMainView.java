@@ -53,7 +53,7 @@ public class SharepointMainView implements FxmlView<SharepointMainViewModel>, In
 		navigation.setRoot(viewModel.initRootNode());
 		navigation.getRoot().setExpanded(true);
 		navigation.setCellFactory(param -> new NavigationItemCell());
-		viewModel.selectedNaviagtionItemProperty().bind(navigation.getSelectionModel().selectedItemProperty());
+		viewModel.selectedNavigationItemProperty().bind(navigation.getSelectionModel().selectedItemProperty());
 		viewModel.navigationItemHistoryProperty().addListener((ChangeListener<TreeItem<NavigationItem>>) (observable, oldValue, newValue) -> {
 			navigation.getSelectionModel().select(newValue);
 		});

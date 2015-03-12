@@ -3,7 +3,7 @@ package gui.sharepointmain;
 import static org.reactfx.EventStreams.changesOf;
 import gui.model.ContentItem;
 import gui.model.NavigationItem;
-import gui.model.NaviagtionItemModel;
+import gui.model.NavigationItemModel;
 import gui.util.RecursiveTreeItem;
 
 import java.util.Collections;
@@ -33,7 +33,7 @@ import de.saxsys.mvvmfx.ViewModel;
 
 public class SharepointMainViewModel implements ViewModel{
 
-	private ObjectProperty<TreeItem<NavigationItem>> selectedNaviagtionItem = new SimpleObjectProperty<TreeItem<NavigationItem>>();
+	private ObjectProperty<TreeItem<NavigationItem>> selectedNavigationItem = new SimpleObjectProperty<TreeItem<NavigationItem>>();
 	private ObjectProperty<TreeItem<NavigationItem>> navigationItemHistory = new SimpleObjectProperty<TreeItem<NavigationItem>>();
 	private ObservableList<ContentItem> contentItemList = FXCollections.observableArrayList();
 	private IntegerProperty viewNumber = new SimpleIntegerProperty(2);
@@ -44,10 +44,10 @@ public class SharepointMainViewModel implements ViewModel{
 	private UndoManager undoManager;
 
 	@Inject
-	private NaviagtionItemModel navigationItemModel;
+	private NavigationItemModel navigationItemModel;
 
-	public ObjectProperty<TreeItem<NavigationItem>> selectedNaviagtionItemProperty() {
-		return selectedNaviagtionItem;
+	public ObjectProperty<TreeItem<NavigationItem>> selectedNavigationItemProperty() {
+		return selectedNavigationItem;
 	}
 	
 	public ObservableList<ContentItem> contentItemListProperty() {
@@ -75,7 +75,7 @@ public class SharepointMainViewModel implements ViewModel{
 	@Inject
 	public SharepointMainViewModel(SharepointService service){
 		EventStream<Change<TreeItem<NavigationItem>>> selectedNavigationItemChanges =
-		        changesOf(selectedNaviagtionItem);
+		        changesOf(selectedNavigationItem);
 		
 		undoManager = UndoManagerFactory.unlimitedHistoryUndoManager(
 				selectedNavigationItemChanges, // stream of changes to observe
@@ -85,20 +85,20 @@ public class SharepointMainViewModel implements ViewModel{
 		this.service = service;
 		this.sharepointItemList = this.service.getSharepointFiles();
 		
-		selectedNaviagtionItem.addListener((ChangeListener<TreeItem<NavigationItem>>) (observable, oldValue, newValue) -> {
-			if (oldValue == null){
+		selectedNavigationItem.addListener((ChangeListener<TreeItem<NavigationItem>>) (observable, oldValue, newValue) -> {
+/*			if (oldValue == null){
 				undoManager.forgetHistory();
-			}
+			}*/
 			if (newValue == null) {
-						// In this case, the parent tree item is closed, so that
-						// in the first change the new tree item is null, this
-						// should be catched here.
-						// In the next change the value is set to the closed
-						// parent tree item.
+				// In this case, the parent tree item is closed, so that
+				// in the first change the new tree item is null, this
+				// should be catched here.
+				// In the next change the value is set to the closed
+				// parent tree item.
 			} else if (newValue.getValue().equals(navigationItemModel.getRootItem())) {
 				addItemsContent(null, sharepointItemList);
 			} else {
-				addItemsContent(newValue.getValue().getName(),sharepointItemList);
+				addItemsContent(newValue.getValue().getName(), sharepointItemList);
 			}
 		});
 	}
